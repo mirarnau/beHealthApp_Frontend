@@ -1,0 +1,14 @@
+{
+    "titles":
+    {
+        "beHealthApp": "beHealthApp"
+    },
+    "nav_bar":
+    {
+        "appointments": "Appointments",
+        "telemedicine": "Telemedicine",
+        "new_appointment": "New appointment",
+        "measurements": "New measurements",
+        "my_health": "My health"
+    }
+}

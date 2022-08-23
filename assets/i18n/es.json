@@ -1,0 +1,14 @@
+{
+    "titles":
+    {
+        "beHealthApp": "beHealthApp"
+    },
+    "nav_bar":
+    {
+        "appointments": "Citas",
+        "telemedicine": "Telemedicina",
+        "new_appointment": "Nueva cita",
+        "measurements": "Mediciones",
+        "my_health": "Mi salud"
+    }
+}
