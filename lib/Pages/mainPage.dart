@@ -3,6 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:medical_devices/NavDrawers/mainDrawer.dart';
+import 'package:medical_devices/Pages/measurementsPage.dart';
 
 class MainPage extends StatefulWidget {
   final int selectedIndex;
@@ -15,9 +17,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   late int _selectedIndex = widget.selectedIndex;
 
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-  late final screens = [Text(translate('nav_bar.appointments')), Text(translate('nav_bar.telemedicine')), Text(translate('nav_bar.new_appointment')), Text(translate('nav_bar.measurements')), Text(translate('nav_bar.my_health'))];
+  late final screens = [Text(translate('nav_bar.appointments')), Text(translate('nav_bar.telemedicine')), Text(translate('nav_bar.new_appointment')), MeasurementsPage(), Text(translate('nav_bar.my_health'))];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -38,7 +38,9 @@ class _MainPageState extends State<MainPage> {
           translate('titles.beHealthApp'),
           style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
         ),
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.chat_bubble_rounded))],
       ),
+      drawer: NavDrawer(),
       body: Center(
         child: screens.elementAt(_selectedIndex),
       ),

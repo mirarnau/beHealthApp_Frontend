@@ -10,5 +10,22 @@
         "new_appointment": "New appointment",
         "measurements": "New measurements",
         "my_health": "My health"
+    },
+    "medical_devices":
+    {
+        "temperature_bracelet": "Temperature bracelet",
+        "pressure_bracelet": "Pressure bracelet",
+        "tensiometer": "Tensiometer",
+        "oximeter": "Oximeter",
+        "thermometer": "Thermometer",
+        "scale": "Scale"
+    },
+    "pages":
+    {
+        "measurements_page":
+        {
+            "my_devices": "My devices",
+            "my_measurements": "My measurements"
+        }
     }
 }

@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                   )),
           home: MainPage(
-            selectedIndex: 1,
+            selectedIndex: 3,
           ),
         ),
       ),

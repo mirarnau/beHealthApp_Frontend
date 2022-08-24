@@ -10,5 +10,22 @@
         "new_appointment": "Nueva cita",
         "measurements": "Mediciones",
         "my_health": "Mi salud"
+    },
+    "medical_devices":
+    {
+        "temperature_bracelet": "Brazalete de temperatura",
+        "pressure_bracelet": "Brazalete de presión",
+        "tensiometer": "Tensiómetro",
+        "oximeter": "Oxímetro",
+        "thermometer": "Termómetro",
+        "scale": "Báscula"
+    },
+    "pages":
+    {
+        "measurements_page":
+        {
+            "my_devices": "Mis dispositivos",
+            "my_measurements": "Mis mediciones"
+        }
     }
 }
