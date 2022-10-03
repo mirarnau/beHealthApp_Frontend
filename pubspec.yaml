@@ -16,7 +16,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_settings_screens: ^0.2.2+1
-  carousel_slider: ^4.0.0
+  carousel_slider: ^4.1.1
 
 dev_dependencies:
   flutter_test:
@@ -29,12 +29,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/images/bl_1500.png
-    - assets/images/bpm_100.png
-    - assets/images/bpm_200w.png
-    - assets/images/bt_125.jpeg
-    - assets/images/it_45b.png
-    - assets/images/ol_750.png
     - assets/i18n/en.json
     - assets/i18n/es.json
 

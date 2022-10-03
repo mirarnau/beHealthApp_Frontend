@@ -13,8 +13,8 @@
     },
     "medical_devices":
     {
-        "temperature_bracelet": "Brazalete de temperatura",
-        "pressure_bracelet": "Brazalete de presión",
+        "temperature_bracelet": "Brazalete temperatura",
+        "pressure_bracelet": "Brazalete presión",
         "tensiometer": "Tensiómetro",
         "oximeter": "Oxímetro",
         "thermometer": "Termómetro",

@@ -32,27 +32,21 @@ class _MeasurementsPageState extends State<MeasurementsPage> {
               style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),
             ))),
           ),
-          Expanded(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 25.0),
-                  child: CarouselSlider(
-                      items: [DeviceCard(nameDevice: translate('medical_devices.oximeter'), photoDevice: Image.asset('assets/images/ol_750.png'), modelDevice: 'OL-750'), DeviceCard(nameDevice: translate('medical_devices.tensiometer'), photoDevice: Image.asset('assets/images/bpm_200w.png'), modelDevice: 'BT-125'), DeviceCard(nameDevice: translate('medical_devices.scale'), photoDevice: Image.asset('assets/images/bl_1500.png'), modelDevice: 'BL-1500')],
-                      options: CarouselOptions(
-                        height: 420.0,
-                        enlargeCenterPage: true,
-                        autoPlay: false,
-                        aspectRatio: 16 / 9,
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        scrollDirection: Axis.horizontal,
-                        enableInfiniteScroll: true,
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        viewportFraction: 0.6,
-                      )),
-                )
-              ],
-            ),
+          Padding(
+            padding: const EdgeInsets.only(top: 25.0),
+            child: CarouselSlider(
+                items: [DeviceCard(nameDevice: translate('medical_devices.oximeter'), photoDevice: Image.asset('assets/images/ol_750.png'), modelDevice: 'OL-750'), DeviceCard(nameDevice: translate('medical_devices.tensiometer'), photoDevice: Image.asset('assets/images/bpm_200w.png'), modelDevice: 'BPM 200W'), DeviceCard(nameDevice: translate('medical_devices.scale'), photoDevice: Image.asset('assets/images/bl_1500.png'), modelDevice: 'BL-1500'), DeviceCard(nameDevice: translate('medical_devices.thermometer'), photoDevice: Image.asset('assets/images/it_45b.png'), modelDevice: 'IT-45B'), DeviceCard(nameDevice: translate('medical_devices.pressure_bracelet'), photoDevice: Image.asset('assets/images/bpm_100.png'), modelDevice: 'BPM-100'), DeviceCard(nameDevice: translate('medical_devices.temperature_bracelet'), photoDevice: Image.asset('assets/images/bt_125.png'), modelDevice: 'BT-125')],
+                options: CarouselOptions(
+                  height: 410.0,
+                  enlargeCenterPage: true,
+                  autoPlay: false,
+                  aspectRatio: 16 / 9,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  scrollDirection: Axis.horizontal,
+                  enableInfiniteScroll: true,
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  viewportFraction: 0.6,
+                )),
           )
         ],
       ),

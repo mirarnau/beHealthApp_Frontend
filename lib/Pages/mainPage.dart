@@ -26,6 +26,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void initState() {
+    changeLocale(context, 'en');
     super.initState();
   }
 

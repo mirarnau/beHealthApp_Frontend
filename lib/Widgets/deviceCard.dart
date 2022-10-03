@@ -36,22 +36,26 @@ class DeviceCard extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 40.0),
+                padding: const EdgeInsets.only(top: 20.0),
                 child: photoDevice,
               ),
               SizedBox(
                 height: 5.0,
               ),
-              Text(
-                nameDevice,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  nameDevice,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
+                ),
               ),
               SizedBox(
                 height: 5.0,
               ),
               Text(
                 modelDevice,
-                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20.0),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0, color: Theme.of(context).primaryColor),
               )
             ],
           ),
