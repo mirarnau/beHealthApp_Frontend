@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/NavDrawers/mainDrawer.dart';
-import 'package:medical_devices/Pages/measurementsPage.dart';
+import 'package:medical_devices/presentation/Pages/measurementsPage.dart';
 
 class MainPage extends StatefulWidget {
   final int selectedIndex;
