@@ -8,7 +8,7 @@
         "appointments": "Appointments",
         "telemedicine": "Telemedicine",
         "new_appointment": "New appointment",
-        "measurements": "New measurements",
+        "measurements": "Measurements",
         "my_health": "My health"
     },
     "medical_devices":
@@ -25,7 +25,8 @@
         "measurements_page":
         {
             "my_devices": "My devices",
-            "my_measurements": "My measurements"
+            "my_measurements": "My measurements",
+            "measure": "Measure"
         }
     }
 }

@@ -119,11 +119,12 @@ class Language {
 class Coding {
   late final String system;
   late final String code;
+  late final String display;
 
-  Coding({required this.system, required this.code});
+  Coding({required this.system, required this.code, required this.display});
 
   factory Coding.fromJSON(dynamic json) {
-    Coding coding = Coding(system: json['system'], code: json['code']);
+    Coding coding = Coding(system: json['system'], code: json['code'], display: json['display']);
     return coding;
   }
 }

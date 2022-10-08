@@ -1,0 +1,33 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
+part of 'device_bloc.dart';
+
+abstract class DeviceEvent extends Equatable {
+  const DeviceEvent();
+}
+
+class SelectDeviceEvent extends DeviceEvent {
+  final String nameDevice;
+  const SelectDeviceEvent(this.nameDevice);
+  @override
+  List<Object?> get props => [nameDevice];
+}
+
+class DeSelectDeviceEvent extends DeviceEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class DeviceMeasurementsRequestEvent extends DeviceEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class DeviceDoMeasureEvent extends DeviceEvent {
+  final String id; //Patient ID
+  final String nameDevice;
+
+  DeviceDoMeasureEvent(this.id, this.nameDevice);
+  @override
+  List<Object?> get props => [id, nameDevice];
+}

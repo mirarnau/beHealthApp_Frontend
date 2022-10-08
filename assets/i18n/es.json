@@ -25,7 +25,8 @@
         "measurements_page":
         {
             "my_devices": "Mis dispositivos",
-            "my_measurements": "Mis mediciones"
+            "my_measurements": "Mis mediciones",
+            "measure": "Medir"
         }
     }
 }

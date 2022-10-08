@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/NavDrawers/mainDrawer.dart';
-import 'package:medical_devices/presentation/Pages/measurementsPage.dart';
+import 'package:medical_devices/presentation/Pages/devicesPage.dart';
 
 class MainPage extends StatefulWidget {
   final int selectedIndex;
@@ -17,7 +17,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   late int _selectedIndex = widget.selectedIndex;
 
-  late final screens = [Text(translate('nav_bar.appointments')), Text(translate('nav_bar.telemedicine')), Text(translate('nav_bar.new_appointment')), MeasurementsPage(), Text(translate('nav_bar.my_health'))];
+  late final screens = [Text(translate('nav_bar.appointments')), Text(translate('nav_bar.telemedicine')), Text(translate('nav_bar.new_appointment')), DevicesPage(), Text(translate('nav_bar.my_health'))];
 
   void _onItemTapped(int index) {
     setState(() {
