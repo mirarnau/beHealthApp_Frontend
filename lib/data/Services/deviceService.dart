@@ -26,4 +26,40 @@ class DeviceService {
     }
     return null;
   }
+
+  Future<List<Observation>?> getAllObservationsByPatient(String patientId) async {
+    var res = await http.get(Uri.parse('$baseUrl?patient=$patientId'), headers: {'accept': 'application/fhir+json'});
+    List<Observation> allObservationsPatient = [];
+    var jsonContainsComponents = false;
+    var jsonContainsReferences = false;
+
+    if (res.statusCode == 200) {
+      var decoded = jsonDecode(res.body);
+      var observationsDecoded = decoded["entry"];
+      observationsDecoded.forEach((observation) {
+        if (observation["resource"].containsKey("component")) {
+          jsonContainsComponents = true;
+        }
+        if (observation["resource"].containsKey("referenceRange")) {
+          jsonContainsReferences = true;
+        }
+        allObservationsPatient.add(Observation.fromJSON(observation["resource"], jsonContainsComponents, jsonContainsReferences));
+        jsonContainsComponents = false;
+        jsonContainsReferences = false;
+      });
+
+      return allObservationsPatient;
+    }
+
+    return null;
+  }
+
+//MUST BE DELETED IN THE END
+  Future<void> deleteObservationById() async {
+    for (int id = 0; id < 200; id++) {
+      if ((id != 77) && (id != 70) && (id != 58)) {
+        await http.delete(Uri.parse('$baseUrl/$id'), headers: {'accept': 'application/fhir+json'});
+      }
+    }
+  }
 }

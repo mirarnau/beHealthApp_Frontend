@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:medical_devices/data/Models/Observation.dart';
@@ -15,8 +17,14 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     on<DeSelectDeviceEvent>((event, emit) {
       emit(DeviceIdleState());
     });
+    on<ConnectDeviceEvent>((event, emit) async {
+      emit(DeviceConnectingState());
+      await Future.delayed(Duration(seconds: 2));
+      emit(DeviceIdleState());
+    });
     on<DeviceDoMeasureEvent>((event, emit) async {
       emit(DeviceMeasuringState());
+      await Future.delayed(Duration(seconds: 3));
       final response = await _deviceService.getObservationById(event.id);
       if (response != null) {
         emit(DeviceMeasureDoneState(response, event.nameDevice));

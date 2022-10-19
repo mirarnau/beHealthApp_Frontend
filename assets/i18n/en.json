@@ -18,7 +18,19 @@
         "tensiometer": "Tensiometer",
         "oximeter": "Oximeter",
         "thermometer": "Thermometer",
-        "scale": "Scale"
+        "scale": "Scale",
+        "connection":
+        {
+            "connected": "Connected",
+            "disconnected": "Disconnected",
+            "connect": "Connect"
+        },
+        "alerts": 
+        {
+            "alerts": "Alerts",
+            "device_disconnected_1": "The device",
+            "device_disconnected_2": "is disconnected"
+        }
     },
     "pages":
     {
@@ -26,7 +38,32 @@
         {
             "my_devices": "My devices",
             "my_measurements": "My measurements",
-            "measure": "Measure"
+            "measure": "Measure",
+            "measuring": "Measurement in progress"
+        },
+        "historical_page":
+        {
+            "day": "Day",
+            "week": "Week",
+            "month": "Month",
+            "year": "Year",
+            "weekdays":
+            {
+                "monday": "Monday",
+                "tuesday": "Tuesday",
+                "wednesday": "Wednesday",
+                "thursday": "Thursday",
+                "friday": "Friday",
+                "saturday": "Saturday",
+                "sunday": "Sunday"
+            },
+            "titles":
+            {
+                "temperature": "Temperature",
+                "pressure": "Pressure",
+                "weight": "Weight",
+                "oxigen": "Oxygen"
+            }
         }
     }
 }

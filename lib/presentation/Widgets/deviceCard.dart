@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,8 +9,9 @@ class DeviceCard extends StatelessWidget {
   final String nameDevice;
   final Image photoDevice;
   final String modelDevice;
+  final bool connected;
 
-  DeviceCard({required this.nameDevice, required this.photoDevice, required this.modelDevice});
+  DeviceCard({required this.nameDevice, required this.photoDevice, required this.modelDevice, required this.connected});
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +41,13 @@ class DeviceCard extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: photoDevice,
+                  Container(
+                    height: 250.0,
+                    width: 250.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: photoDevice,
+                    ),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -64,19 +69,88 @@ class DeviceCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: TextButton(
-                    style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor, fixedSize: Size(200.0, 40.0)),
-                    onPressed: () {
-                      BlocProvider.of<DeviceBloc>(context).add(SelectDeviceEvent(nameDevice));
-                    },
-                    child: Text(
-                      translate('pages.measurements_page.measure'),
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      BlocBuilder<DeviceBloc, DeviceState>(
+                        builder: (context, state) {
+                          if (state is DeviceConnectingState) {
+                            return TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: connected ? Theme.of(context).primaryColor : Colors.yellow,
+                                  fixedSize: Size(200.0, 40.0),
+                                ),
+                                onPressed: () {
+                                  if (connected) {
+                                    BlocProvider.of<DeviceBloc>(context).add(SelectDeviceEvent(nameDevice));
+                                  } else {
+                                    BlocProvider.of<DeviceBloc>(context).add(ConnectDeviceEvent());
+                                  }
+                                },
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Connecting...',
+                                        style: TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.bold),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 20.0),
+                                        child: SizedBox(
+                                          height: 20.0,
+                                          width: 20.0,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ));
+                          } else {
+                            return TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: connected ? Theme.of(context).primaryColor : Colors.grey,
+                                  fixedSize: Size(200.0, 40.0),
+                                ),
+                                onPressed: () {
+                                  if (connected) {
+                                    BlocProvider.of<DeviceBloc>(context).add(SelectDeviceEvent(nameDevice));
+                                  } else {
+                                    BlocProvider.of<DeviceBloc>(context).add(ConnectDeviceEvent());
+                                  }
+                                },
+                                child: Text(
+                                  connected ? translate('pages.measurements_page.measure') : translate('medical_devices.connection.connect'),
+                                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                                ));
+                          }
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 14.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              connected ? Icons.bluetooth_connected : Icons.bluetooth_disabled,
+                              color: connected ? Theme.of(context).primaryColor : Colors.red,
+                            ),
+                            Text(
+                              connected ? translate('medical_devices.connection.connected') : translate('medical_devices.connection.disconnected'),
+                              style: TextStyle(
+                                color: connected ? Theme.of(context).primaryColor : Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                 ),
               )

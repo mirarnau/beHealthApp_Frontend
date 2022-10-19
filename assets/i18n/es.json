@@ -18,7 +18,19 @@
         "tensiometer": "Tensiómetro",
         "oximeter": "Oxímetro",
         "thermometer": "Termómetro",
-        "scale": "Báscula"
+        "scale": "Báscula",
+        "connection":
+        {
+            "connected": "Conectado",
+            "disconnected": "Desconectado",
+            "connect": "Conectar"
+        },
+        "alerts": 
+        {
+            "alerts": "Avisos",
+            "device_disconnected_1": "El dispositivo",
+            "device_disconnected_2": "no está conectado"
+        }
     },
     "pages":
     {
@@ -26,7 +38,32 @@
         {
             "my_devices": "Mis dispositivos",
             "my_measurements": "Mis mediciones",
-            "measure": "Medir"
+            "measure": "Medir",
+            "measuring": "Medida en progreso"
+        },
+        "historical_page":
+        {
+            "day": "Día",
+            "week": "Semana",
+            "month": "Mes",
+            "year": "Año",
+            "weekdays":
+            {
+                "monday": "Lunes",
+                "tuesday": "Martes",
+                "wednesday": "Miércoles",
+                "thursday": "Jueves",
+                "friday": "Viernes",
+                "saturday": "Sábado",
+                "sunday": "Domingo"
+            },
+            "titles":
+            {
+                "temperature": "Temperatura",
+                "pressure": "Pressión",
+                "weight": "Peso",
+                "oxigen": "Oxígeno"
+            }
         }
     }
 }

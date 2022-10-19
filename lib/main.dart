@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/device/device_bloc.dart';
+import 'package:medical_devices/business_logic/bloc/historical/historical_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
 import 'package:medical_devices/data/Services/deviceService.dart';
 import 'package:medical_devices/data/Services/patientService.dart';

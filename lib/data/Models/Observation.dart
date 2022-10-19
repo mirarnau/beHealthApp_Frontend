@@ -128,8 +128,12 @@ class ReferenceRange {
 
   factory ReferenceRange.fromJSON(dynamic json) {
     ReferenceRange referenceRange = ReferenceRange();
-    referenceRange.high = HighOrLow.fromJSON(json['high']);
-    referenceRange.low = HighOrLow.fromJSON(json['low']);
+    if (json.containsKey("high")) {
+      referenceRange.high = HighOrLow.fromJSON(json['high']);
+    }
+    if (json.containsKey("low")) {
+      referenceRange.low = HighOrLow.fromJSON(json['low']);
+    }
     return referenceRange;
   }
 }
