@@ -5,9 +5,7 @@
     },
     "nav_bar":
     {
-        "appointments": "Citas",
-        "telemedicine": "Telemedicina",
-        "new_appointment": "Nueva cita",
+        "messages": "Mensajes",
         "measurements": "Mediciones",
         "my_health": "Mi salud"
     },
@@ -34,6 +32,56 @@
     },
     "pages":
     {
+        "login_page": 
+        {
+            "enter_email": "Escribe correo electrónico",
+            "enter_password": "Escribe tu contraseña",
+            "email": "Correo electrónico",
+            "password": "Contraseña",
+            "forgot_password": "Has olvidado tu contraseña?",
+            "remember": "Recuérdame",
+            "login": "ACCEDER",
+            "sign_in_with": "Acceder con",
+            "no_account": "No tienes una Cuenta?",
+            "sign_up": "Regístrate"
+        },
+        "register_page":
+        {
+            "name": "Nombre",
+            "surnames": "Apellidos",
+            "enter_surnames": "Escribe tus apellidos",
+            "enter_name": "Escribe tu nombre",
+            "birth_date": "Fecha de Nacimiento",
+            "enter_birthdate": "DD/MM/YYYY",
+            "gender": "Género",
+            "select_gender": "Selecciona tu género",
+            "male": "Hombre",
+            "female": "Mujer",
+            "others": "Otros",
+            "unknown": "Desconocido",
+            "phone_number": "Número de teléfono",
+            "enter_phone_number": "Escribe tu número de teléfono",
+            "address": "Dirección",
+            "enter_address": "Escribe tu dirección",
+            "use_address": "Uso de la dirección",
+            "select_use_address": "Selecciona uno de los siguientes usos",
+            "home": "Casa",
+            "work": "Trabajo",
+            "temporal": "Temporal",
+            "other_uses": "Otros",
+            "city": "Ciudad",
+            "enter_city": "Escribe tu ciudad",
+            "postal_code": "Código Postal",
+            "enter_postal_code": "Esctibe tu código postal",
+            "country": "País",
+            "select_country": "Selecciona tu país",
+            "language": "Idioma",
+            "select_language": "Selecciona tu idioma preferente",
+            "repeat_password": "Repetir Contraseña",
+            "enter_repeat_password": "Vuelve a escribir tu contraseña",
+            "sign_up": "REGÍSTRATE"
+
+        },
         "measurements_page":
         {
             "my_devices": "Mis dispositivos",
@@ -61,6 +109,8 @@
             {
                 "temperature": "Temperatura",
                 "pressure": "Pressión",
+                "systolic": "Sistólica",
+                "Dyastolic": "Diastólica",
                 "weight": "Peso",
                 "oxigen": "Oxígeno"
             }

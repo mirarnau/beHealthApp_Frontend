@@ -105,16 +105,19 @@ class _MeasurementPageState extends State<MeasurementPage> {
                           ),
                         ),
                         getWidget(state, context),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30.0),
-                          child: TextButton(
-                            style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor, fixedSize: Size(200.0, 40.0)),
-                            onPressed: () {
-                              BlocProvider.of<DeviceBloc>(context).add(DeviceDoMeasureEvent(idObservation, nameDevice));
-                            },
-                            child: Text(
-                              translate('pages.measurements_page.measure'),
-                              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                        Visibility(
+                          visible: state is DeviceMeasureDoneState || state is DeviceSelectedState,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 30.0),
+                            child: TextButton(
+                              style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor, fixedSize: Size(200.0, 40.0)),
+                              onPressed: () {
+                                BlocProvider.of<DeviceBloc>(context).add(DeviceDoMeasureEvent(idObservation, nameDevice));
+                              },
+                              child: Text(
+                                translate('pages.measurements_page.measure'),
+                                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),
@@ -125,6 +128,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
                       renderPanelSheet: false,
                       panel: _floatingPanel(idPatient, context),
                       collapsed: _floatingCollapsed(context),
+                      backdropEnabled: true,
                     ),
                   ],
                 ),
@@ -215,11 +219,15 @@ class _MeasurementPageState extends State<MeasurementPage> {
       if (nameDevice == "Temperature bracelet") {
         idObservation = "109";
         List<ReferenceRange> emptyReferencesList = [];
-        return ThermometerMeasureCard(
-          value: "-",
-          unit: "ºC",
-          referenceRange: emptyReferencesList,
-          measureDone: false,
+        return Column(
+          children: [
+            ThermometerMeasureCard(
+              value: "-",
+              unit: "ºC",
+              referenceRange: emptyReferencesList,
+              measureDone: false,
+            ),
+          ],
         );
       } else {
         return Text('b');
@@ -242,9 +250,12 @@ class _MeasurementPageState extends State<MeasurementPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 25.0),
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
-                color: Theme.of(c).primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(70.0, 0.0, 70.0, 0.0),
+                child: LinearProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).cardColor,
+                ),
               ),
             ),
           ],

@@ -5,9 +5,7 @@
     },
     "nav_bar":
     {
-        "appointments": "Appointments",
-        "telemedicine": "Telemedicine",
-        "new_appointment": "New appointment",
+        "messages": "Messages",
         "measurements": "Measurements",
         "my_health": "My health"
     },
@@ -34,6 +32,55 @@
     },
     "pages":
     {
+        "login_page": 
+        {
+            "enter_email": "Enter your Email",
+            "enter_password": "Enter your password",
+            "email": "Email",
+            "password": "Password",
+            "forgot_password": "Forgot password?",
+            "remember": "Remember me",
+            "login": "LOGIN",
+            "sign_in_with": "Sign in with",
+            "no_account": "Don't have an Account? ",
+            "sign_up": "Sign Up"
+        },
+        "register_page":
+        {
+            "name": "Name",
+            "surnames": "Surnames",
+            "enter_surnames": "Enter your surname",
+            "enter_name": "Enter your name",
+            "birth_date": "Birth Date",
+            "enter_birthdate": "DD/MM/YYYY",
+            "gender": "Gender",
+            "select_gender": "Select your gender",
+            "male": "Male",
+            "female": "Female",
+            "others": "Others",
+            "unknown": "Unknown",
+            "phone_number": "Phone Number",
+            "enter_phone_number": "Enter your phone number",
+            "address": "Address",
+            "enter_address": "Enter your address",
+            "use_address": "Use Address",
+            "select_use_address": "Select use address",
+            "home": "Home",
+            "work": "Work",
+            "temporal": "Temporal",
+            "other_uses": "Others",
+            "city": "City",
+            "enter_city": "Enter city",
+            "postal_code": "Postal Code",
+            "enter_postal_code": "Enter the postal code",
+            "country": "Country",
+            "select_country": "Select your country",
+            "language": "Language",
+            "select_language": "Select your preferred language",
+            "repeat_password": "Repeat password",
+            "enter_repeat_password": "Write your password again",
+            "sign_up": "SIGN UP"
+        },
         "measurements_page":
         {
             "my_devices": "My devices",
@@ -61,6 +108,8 @@
             {
                 "temperature": "Temperature",
                 "pressure": "Pressure",
+                "systolic": "Systolic",
+                "dyastolic": "Dyastolic",
                 "weight": "Weight",
                 "oxigen": "Oxygen"
             }

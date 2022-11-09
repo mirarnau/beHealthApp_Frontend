@@ -17,7 +17,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   late int _selectedIndex = widget.selectedIndex;
 
-  late final screens = [Text(translate('nav_bar.appointments')), Text(translate('nav_bar.telemedicine')), Text(translate('nav_bar.new_appointment')), DevicesPage(), Text(translate('nav_bar.my_health'))];
+  late final screens = [Text(translate('nav_bar.messages')), DevicesPage(), Text(translate('nav_bar.my_health'))];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -49,16 +49,8 @@ class _MainPageState extends State<MainPage> {
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: translate('nav_bar.appointments'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.phone_iphone),
-            label: translate('nav_bar.telemedicine'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle),
-            label: translate('nav_bar.new_appointment'),
+            icon: Icon(Icons.chat_bubble),
+            label: translate('nav_bar.messages'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),

@@ -1,4 +1,6 @@
 class Patient {
+  late final String apiId;
+  late final String password;
   late final String id;
   late final String resourceType;
   late final List<Identifier> identifier;
@@ -15,6 +17,7 @@ class Patient {
   factory Patient.fromJSON(dynamic json) {
     Patient patient = Patient();
 
+    patient.apiId = json['_id'];
     patient.id = json['id'];
     patient.resourceType = json['resourceType'];
     final identifierData = json['identifier'] as List<dynamic>?;
@@ -38,6 +41,33 @@ class Patient {
 
     return patient;
   }
+
+  static Map<String, dynamic> toJsonApi(Patient patient) {
+    String? getTelecomAtributePatient(String atribute) {
+      for (int i = 0; i < patient.telecom.length; i++) {
+        if (patient.telecom[i].system == atribute) {
+          return patient.telecom[i].value.toString();
+        }
+      }
+      return null;
+    }
+
+    return {
+      'full_name': patient.name[0].text,
+      'surnames': patient.name[0].family,
+      'gender': patient.gender,
+      'birth_date': patient.birthDate,
+      'language': patient.communication[0].language.coding[0].code,
+      'email': getTelecomAtributePatient('email'),
+      'phone_number': getTelecomAtributePatient('phone'),
+      'use_address': patient.address[0].use,
+      'line': patient.address[0].line[0],
+      'city': patient.address[0].city,
+      'postal_code': patient.address[0].postalCode,
+      'country': patient.address[0].country,
+      'password': patient.password,
+    };
+  }
 }
 
 class Identifier {
@@ -56,11 +86,12 @@ class Identifier {
 class Name {
   late final String use;
   late final String family;
+  late final String text;
 
-  Name({required this.use, required this.family});
+  Name({required this.use, required this.family, required this.text});
 
   factory Name.fromJSON(dynamic json) {
-    Name name = Name(use: json['name'], family: json['family']);
+    Name name = Name(use: json['name'], family: json['family'], text: json['text']);
     return name;
   }
 }

@@ -5,12 +5,12 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/data/Models/Observation.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ChartTempCard extends StatelessWidget {
+class ChartPressureCard extends StatelessWidget {
   final List<Observation> listObservations;
   final String title;
   final bool legendVisible = true;
 
-  ChartTempCard({required this.listObservations, required this.title});
+  ChartPressureCard({required this.listObservations, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +20,10 @@ class ChartTempCard extends StatelessWidget {
       color: Theme.of(context).cardColor,
     );
     return SfCartesianChart(
+        legend: Legend(
+          isVisible: true,
+          position: LegendPosition.bottom,
+        ),
         tooltipBehavior: _tooltipBehavior,
         plotAreaBorderWidth: 0.0,
         primaryXAxis: CategoryAxis(
@@ -28,50 +32,51 @@ class ChartTempCard extends StatelessWidget {
         ),
         primaryYAxis: NumericAxis(
           majorGridLines: MajorGridLines(width: 0),
-          labelFormat: '{value} ºC',
+          labelFormat: '{value} ${listObservations[0].component[0].valueQuantity.unit}',
           isVisible: false,
         ),
         series: <ChartSeries>[
           LineSeries<Observation, String>(
-            name: translate('pages.historical_page.titles.temperature'),
-            color: Theme.of(context).primaryColor,
+            name: translate('pages.historical_page.titles.systolic'),
+            color: Colors.red,
             width: 1.0,
             dataSource: listObservations,
             xValueMapper: (Observation observation, _) => '${DateTime.parse(observation.effectiveDateTime).day}/${DateTime.parse(observation.effectiveDateTime).month}',
-            yValueMapper: (Observation observation, _) => observation.valueQuantity.value,
+            yValueMapper: (Observation observation, _) => observation.component[0].valueQuantity.value,
             dataLabelSettings: DataLabelSettings(
               isVisible: true,
-              textStyle: TextStyle(color: Color.fromARGB(255, 85, 85, 85), fontWeight: FontWeight.bold),
+              textStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             ),
             enableTooltip: true,
             markerSettings: MarkerSettings(
               isVisible: true,
-              color: Theme.of(context).primaryColor,
-              borderColor: Theme.of(context).primaryColor,
+              color: Colors.red,
+              borderColor: Colors.red,
               height: 10.0,
               width: 10.0,
               shape: DataMarkerType.circle,
             ),
           ),
           LineSeries<Observation, String>(
-            name: translate('pages.historical_page.titles.temperature'),
-            color: Colors.red,
-            dashArray: <double>[10, 10],
-            width: 1.0,
-            dataSource: listObservations,
-            enableTooltip: false,
-            xValueMapper: (Observation observation, _) => '${DateTime.parse(observation.effectiveDateTime).day}/${DateTime.parse(observation.effectiveDateTime).month}',
-            yValueMapper: (Observation observation, _) => observation.referenceRange[0].high.value,
-          ),
-          LineSeries<Observation, String>(
-            name: translate('pages.historical_page.titles.temperature'),
+            name: translate('pages.historical_page.titles.dyastolic'),
             color: Colors.blue,
-            dashArray: <double>[10, 10],
-            enableTooltip: false,
             width: 1.0,
             dataSource: listObservations,
             xValueMapper: (Observation observation, _) => '${DateTime.parse(observation.effectiveDateTime).day}/${DateTime.parse(observation.effectiveDateTime).month}',
-            yValueMapper: (Observation observation, _) => 35,
+            yValueMapper: (Observation observation, _) => observation.component[1].valueQuantity.value,
+            dataLabelSettings: DataLabelSettings(
+              isVisible: true,
+              textStyle: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+            ),
+            enableTooltip: true,
+            markerSettings: MarkerSettings(
+              isVisible: true,
+              color: Colors.blue,
+              borderColor: Colors.blue,
+              height: 10.0,
+              width: 10.0,
+              shape: DataMarkerType.circle,
+            ),
           ),
         ]);
   }

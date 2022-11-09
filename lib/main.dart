@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/device/device_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/historical/historical_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => PatientBloc(patientService)..add(PatientLoadRequest('52')),
+        ),
+        BlocProvider(
+          create: (context) => AuthorizationBloc(patientService),
         ),
       ],
       child: LocalizationProvider(
@@ -80,7 +84,7 @@ class MyApp extends StatelessWidget {
                     hoverColor: Color.fromARGB(255, 253, 225, 187),
                     highlightColor: Colors.black,
                     hintColor: Color.fromARGB(255, 219, 219, 219),
-                    dialogBackgroundColor: Color.fromARGB(255, 31, 31, 31),
+                    dialogBackgroundColor: Color.fromARGB(255, 242, 183, 5),
                     dialogTheme: DialogTheme(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                     )),

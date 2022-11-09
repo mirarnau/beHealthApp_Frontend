@@ -12,7 +12,9 @@ import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
 import 'package:medical_devices/data/Models/Observation.dart';
 import 'package:medical_devices/data/Services/deviceService.dart';
 import 'package:medical_devices/data/Services/patientService.dart';
+import 'package:medical_devices/presentation/Widgets/Charts/chartPressureCard.dart';
 import 'package:medical_devices/presentation/Widgets/Charts/chartTempCard.dart';
+import 'package:medical_devices/presentation/Widgets/Charts/chartWeightCard.dart';
 import 'package:medical_devices/presentation/Widgets/deviceCard.dart';
 import 'package:medical_devices/presentation/Widgets/pressureMeasureCard.dart';
 import 'package:medical_devices/presentation/Widgets/thermometerMeasureCard.dart';
@@ -147,7 +149,6 @@ class _HistoricalMeasurementsPageState extends State<HistoricalMeasurementsPage>
       var listCodings = listObservation[i].code.coding;
       for (int k = 0; k < listCodings.length; k++) {
         if (listCodings[k].code == "8310-5") {
-          print(listObservation[i].effectiveDateTime);
           temperatureObservations.add(listObservation[i]);
         }
         if (listCodings[k].code == "29463-7") {
@@ -211,6 +212,24 @@ Widget decideChart(HistoricalVisualizationState state) {
     return ChartTempCard(
       listObservations: state.visualizedObservations,
       title: translate('pages.historical_page.titles.temperature'),
+    );
+  }
+  if (state.associatedDevice == translate('medical_devices.pressure_bracelet')) {
+    return ChartPressureCard(
+      listObservations: state.visualizedObservations,
+      title: translate('pages.historical_page.titles.pressure'),
+    );
+  }
+  if (state.associatedDevice == translate('medical_devices.pressure_bracelet')) {
+    return ChartPressureCard(
+      listObservations: state.visualizedObservations,
+      title: translate('pages.historical_page.titles.pressure'),
+    );
+  }
+  if (state.associatedDevice == translate('medical_devices.scale')) {
+    return ChartWeightCard(
+      listObservations: state.visualizedObservations,
+      title: translate('pages.historical_page.titles.weight'),
     );
   } else {
     return Container();
