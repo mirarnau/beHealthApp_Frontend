@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:medical_devices/data/Models/Observation.dart';
-import 'package:medical_devices/data/Models/Patient.dart';
+import 'package:medical_devices/data/Models/User.dart';
 
 class DeviceService {
   var baseUrl = "http://localhost:8080/fhir/Observation";
@@ -29,6 +29,7 @@ class DeviceService {
 
   Future<List<Observation>?> getAllObservationsByPatient(String patientId) async {
     var res = await http.get(Uri.parse('$baseUrl?patient=$patientId'), headers: {'accept': 'application/fhir+json'});
+    print(patientId);
     List<Observation> allObservationsPatient = [];
     var jsonContainsComponents = false;
     var jsonContainsReferences = false;

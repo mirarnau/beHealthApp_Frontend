@@ -23,6 +23,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   syncfusion_flutter_charts: ^20.3.50
   localstorage: ^4.0.0+1
+  material_floating_search_bar: ^0.3.7
 
 dev_dependencies:
   flutter_test:

@@ -34,7 +34,7 @@ class AlertsCard extends StatelessWidget {
               itemCount: listDisconnectedDevices.length,
               itemBuilder: ((context, index) {
                 return Padding(
-                  padding: const EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 30.0),
+                  padding: const EdgeInsets.fromLTRB(50.0, 0.0, 10.0, 30.0),
                   child: Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -44,8 +44,10 @@ class AlertsCard extends StatelessWidget {
                           color: Colors.red,
                           size: 40.0,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        Flexible(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -61,6 +63,7 @@ class AlertsCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.normal,
+                                  overflow: TextOverflow.clip,
                                 ),
                               ),
                             ],

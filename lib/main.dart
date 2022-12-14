@@ -6,11 +6,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
+import 'package:medical_devices/business_logic/bloc/connection/connection_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/device/device_bloc.dart';
+import 'package:medical_devices/business_logic/bloc/groups/groups_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/historical/historical_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
+import 'package:medical_devices/business_logic/bloc/requests/requests_bloc.dart';
+import 'package:medical_devices/data/Models/Group.dart';
 import 'package:medical_devices/data/Services/deviceService.dart';
-import 'package:medical_devices/data/Services/patientService.dart';
+import 'package:medical_devices/data/Services/groupService.dart';
+import 'package:medical_devices/data/Services/userService.dart';
 import 'package:medical_devices/presentation/Pages/mainPage.dart';
 import 'package:medical_devices/presentation/router/app_router.dart';
 
@@ -29,8 +34,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var localizationDelegate = LocalizedApp.of(context).delegate;
-    PatientService patientService = PatientService();
+    UserService patientService = UserService();
     DeviceService deviceService = DeviceService();
+    GroupService groupService = GroupService();
 
     return MultiBlocProvider(
       providers: [
@@ -38,10 +44,19 @@ class MyApp extends StatelessWidget {
           create: (context) => DeviceBloc(deviceService),
         ),
         BlocProvider(
-          create: (context) => PatientBloc(patientService)..add(PatientLoadRequest('52')),
+          create: (context) => PatientBloc(patientService),
         ),
         BlocProvider(
           create: (context) => AuthorizationBloc(patientService),
+        ),
+        BlocProvider(
+          create: (context) => ConnectionBloc(patientService),
+        ),
+        BlocProvider(
+          create: (context) => GroupsBloc(groupService),
+        ),
+        BlocProvider(
+          create: (context) => RequestsBloc(groupService),
         ),
       ],
       child: LocalizationProvider(

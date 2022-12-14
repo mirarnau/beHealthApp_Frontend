@@ -1,4 +1,7 @@
-class Patient {
+import 'package:medical_devices/data/Models/Device.dart';
+import 'package:medical_devices/data/Models/Group.dart';
+
+class User {
   late final String apiId;
   late final String password;
   late final String id;
@@ -11,14 +14,24 @@ class Patient {
   late final String birthDate;
   late final List<Address> address;
   late final List<Communication> communication;
+  late final List<Group> groups;
+  late final List<String> role;
+  late final String imageUrl;
+  late final String fullName;
+  late final String email;
+  late final List<Device> listDevices;
 
-  Patient();
+  User();
 
-  factory Patient.fromJSON(dynamic json) {
-    Patient patient = Patient();
+  factory User.fromJSON(dynamic json) {
+    User patient = User();
 
     patient.apiId = json['_id'];
-    patient.id = json['id'];
+    if (json.containsKey('fhir_id')) {
+      patient.id = json['fhir_id'];
+    } else {
+      patient.id = json['id'];
+    }
     patient.resourceType = json['resourceType'];
     final identifierData = json['identifier'] as List<dynamic>?;
     final listIdentifier = identifierData != null ? identifierData.map((identifier) => Identifier.fromJSON(identifier)).toList() : <Identifier>[];
@@ -38,11 +51,27 @@ class Patient {
     final communicationData = json['communication'] as List<dynamic>?;
     final listCommunication = communicationData != null ? communicationData.map((communication) => Communication.fromJSON(communication)).toList() : <Communication>[];
     patient.communication = listCommunication;
-
+    if (json.containsKey('role')) {
+      patient.role = json['role'].cast<String>();
+    }
+    if (json.containsKey('image_url')) {
+      patient.imageUrl = json['image_url'];
+    }
+    if (json.containsKey('full_name')) {
+      patient.fullName = json['full_name'];
+    }
+    if (json.containsKey('email')) {
+      patient.email = json['email'];
+    }
+    if (json.containsKey('devices')) {
+      final devicesData = json['devices'] as List<dynamic>?;
+      final listDevices = devicesData != null ? devicesData.map((device) => Device.fromJSON(device)).toList() : <Device>[];
+      patient.listDevices = listDevices;
+    }
     return patient;
   }
 
-  static Map<String, dynamic> toJsonApi(Patient patient) {
+  static Map<String, dynamic> toJsonApi(User patient) {
     String? getTelecomAtributePatient(String atribute) {
       for (int i = 0; i < patient.telecom.length; i++) {
         if (patient.telecom[i].system == atribute) {

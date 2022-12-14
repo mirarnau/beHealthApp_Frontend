@@ -20,8 +20,8 @@ class AuthorizingState extends AuthorizationState {
 }
 
 class AuthorizedState extends AuthorizationState {
-  final String patientId;
-  const AuthorizedState(this.patientId);
+  final User user;
+  const AuthorizedState(this.user);
   @override
-  List<Object?> get props => [patientId];
+  List<Object?> get props => [user];
 }

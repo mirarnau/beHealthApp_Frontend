@@ -6,8 +6,9 @@
     "nav_bar":
     {
         "messages": "Mensajes",
-        "measurements": "Mediciones",
-        "my_health": "Mi salud"
+        "devices": "Devices",
+        "my_health": "Mi salud",
+        "groups": "Grupos"
     },
     "medical_devices":
     {
@@ -79,6 +80,8 @@
             "select_language": "Selecciona tu idioma preferente",
             "repeat_password": "Repetir Contraseña",
             "enter_repeat_password": "Vuelve a escribir tu contraseña",
+            "role_patient": "Paciente",
+            "role_manager": "Gestor",
             "sign_up": "REGÍSTRATE"
 
         },
@@ -87,7 +90,8 @@
             "my_devices": "Mis dispositivos",
             "my_measurements": "Mis mediciones",
             "measure": "Medir",
-            "measuring": "Medida en progreso"
+            "measuring": "Medida en progreso",
+            "manage_devices": "Gestionar dispositivos  "
         },
         "historical_page":
         {
@@ -114,6 +118,39 @@
                 "weight": "Peso",
                 "oxigen": "Oxígeno"
             }
+        },
+        "manage_devices":
+        {
+            "name": "Nombre: ",
+            "model": "Modelo: ",
+            "linked": "Vinculado",
+            "not_linked": "No vinculado",
+            "close": "Cerrar"
+        },
+        "groups_page":
+        {
+            "create_group": "Crear grupo",
+            "no_groups_manager": "Todavía no tienes grupos creados",
+            "no_groups_patient": "Todavía no estás en ningún grupo",
+            "no_requests": "No hay solicitudes",
+            "add_group_photo": "Añade una foto para el grupo",
+            "name_group": "Nombre del grupo",
+            "description_group": "Breve descripción del grupo",
+            "add_users": "Añadir usuarios",
+            "search_users": "Busca usuarios...",
+            "confirm_users": "Confirmar usuarios",
+            "users_added": "usuarios añadidos",
+            "description": "Se enviará una solicitud para unirse al grupo a los usuarios seleccionados. Cada usuario será automáticamente añadido al grupo una vez acepte la invitación",
+            "confirm": "Enviar solicitudes y crear grupo"
+        },
+        "info_patient":
+        {
+            "address": "Dirección:  ",
+            "city": "Ciudad:  ",
+            "country": "País:  ",
+            "phone_number": "Número de teléfono:  ",
+            "user_devices": "Aquí puedes ver los dispositivos vinculados del usuario y acceder a su correspondiente histórico de medidas:"
         }
+        
     }
 }

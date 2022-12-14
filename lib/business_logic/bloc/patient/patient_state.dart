@@ -17,7 +17,7 @@ class PatientLoadingState extends PatientState {
 }
 
 class PatientLoadedState extends PatientState {
-  final Patient loadedPatient;
+  final User loadedPatient;
   PatientLoadedState(this.loadedPatient);
 
   @override

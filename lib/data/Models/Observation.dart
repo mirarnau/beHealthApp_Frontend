@@ -1,5 +1,5 @@
 import 'package:http/http.dart';
-import 'package:medical_devices/data/Models/Patient.dart';
+import 'package:medical_devices/data/Models/User.dart';
 
 class Observation {
   late final String id;

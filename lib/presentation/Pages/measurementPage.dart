@@ -11,7 +11,7 @@ import 'package:medical_devices/business_logic/bloc/historical/historical_bloc.d
 import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
 import 'package:medical_devices/data/Models/Observation.dart';
 import 'package:medical_devices/data/Services/deviceService.dart';
-import 'package:medical_devices/data/Services/patientService.dart';
+import 'package:medical_devices/data/Services/userService.dart';
 import 'package:medical_devices/presentation/Pages/historicalMeasuresPage.dart';
 import 'package:medical_devices/presentation/Widgets/deviceCard.dart';
 import 'package:medical_devices/presentation/Widgets/pressureMeasureCard.dart';
@@ -27,7 +27,6 @@ class MeasurementPage extends StatefulWidget {
 }
 
 class _MeasurementPageState extends State<MeasurementPage> {
-  PatientService patientService = PatientService();
   late String nameDevice;
   late String idObservation;
   late String idPatient;
@@ -46,6 +45,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
       builder: (context, state) {
         if (state is PatientLoadedState) {
           idPatient = state.loadedPatient.id;
+          print(state.loadedPatient.id);
         }
         return BlocConsumer<DeviceBloc, DeviceState>(
           listener: (context, state) {

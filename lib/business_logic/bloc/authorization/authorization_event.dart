@@ -5,10 +5,11 @@ abstract class AuthorizationEvent extends Equatable {
 }
 
 class RegisterEvent extends AuthorizationEvent {
-  final Patient patient;
-  const RegisterEvent(this.patient);
+  final User patient;
+  final bool isManager;
+  const RegisterEvent(this.patient, this.isManager);
   @override
-  List<Object?> get props => [patient];
+  List<Object?> get props => [patient, isManager];
 }
 
 class LoginEvent extends AuthorizationEvent {

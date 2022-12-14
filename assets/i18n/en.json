@@ -6,8 +6,9 @@
     "nav_bar":
     {
         "messages": "Messages",
-        "measurements": "Measurements",
-        "my_health": "My health"
+        "devices": "Devices",
+        "my_health": "My health",
+        "groups": "Groups"
     },
     "medical_devices":
     {
@@ -79,6 +80,9 @@
             "select_language": "Select your preferred language",
             "repeat_password": "Repeat password",
             "enter_repeat_password": "Write your password again",
+            "select_role": "Select role",
+            "role_patient": "Patient",
+            "role_manager": "Manager",
             "sign_up": "SIGN UP"
         },
         "measurements_page":
@@ -86,7 +90,8 @@
             "my_devices": "My devices",
             "my_measurements": "My measurements",
             "measure": "Measure",
-            "measuring": "Measurement in progress"
+            "measuring": "Measurement in progress",
+            "manage_devices": "Manage devices "
         },
         "historical_page":
         {
@@ -113,6 +118,38 @@
                 "weight": "Weight",
                 "oxigen": "Oxygen"
             }
+        },
+        "manage_devices":
+        {
+            "name": "Name: ",
+            "model": "Model: ",
+            "linked": "Linked",
+            "not_linked": "Not linked",
+            "close": "Close"
+        },
+        "groups_page":
+        {
+            "create_group": "Create group",
+            "no_groups_manager": "No groups created yet",
+            "no_groups_patient": "You're not in any group yet",
+            "no_requests": "No requests",
+            "add_group_photo": "Add a group picture",
+            "name_group": "Name of the group",
+            "description_group": "Brief description of the group",
+            "add_users": "Add users",
+            "search_users": "Search users...",
+            "confirm_users": "Confirm users",
+            "users_added": "users added",
+            "description": "An invitation to join the group will be sent to the selected users. The user will automatically be added to the group when it accepts it",
+            "confirm": "Send requests and create group"
+        },
+        "info_patient":
+        {
+            "address": "Address:  ",
+            "city": "City:  ",
+            "country": "Country:  ",
+            "phone_number": "Phone number:  ",
+            "user_devices": "Here you can see the devices that the user has linked and access to their corresponding measurements record:"
         }
     }
 }

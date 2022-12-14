@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
+import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
+import 'package:medical_devices/presentation/Pages/mainPage.dart';
 import 'package:medical_devices/presentation/Pages/utilities/constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -148,47 +150,40 @@ class _LoginPageState extends State<LoginPage> {
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: BlocConsumer<AuthorizationBloc, AuthorizationState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is AuthorizedState) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage(selectedIndex: 1, isManager: state.user.role.contains('MANAGER'))));
+          }
+        },
         builder: (context, state) {
           if (state is AuthorizingState) {
             return Center(
               child: CircularProgressIndicator(),
             );
           } else {
-            return BlocConsumer<AuthorizationBloc, AuthorizationState>(
-              builder: (context, state) {
-                if (state is AuthorizingState) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                return RaisedButton(
-                  elevation: 5.0,
-                  onPressed: () {
-                    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-                      BlocProvider.of<AuthorizationBloc>(context).add(LoginEvent(emailController.text, passwordController.text));
-                    }
-                  },
-                  padding: EdgeInsets.all(15.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  color: Color.fromARGB(255, 5, 232, 185),
-                  child: Text(
-                    translate('pages.login_page.login'),
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 33, 40, 48),
-                      letterSpacing: 1.5,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'OpenSans',
-                    ),
-                  ),
-                );
-              },
-              listener: (context, state) {
-                if (state is AuthorizedState) {
-                  Navigator.of(context).pushNamed('/main');
+            return RaisedButton(
+              elevation: 5.0,
+              onPressed: () {
+                if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                  BlocProvider.of<PatientBloc>(context).add(PatientLoadRequest('52'));
+                  BlocProvider.of<AuthorizationBloc>(context).add(LoginEvent(emailController.text, passwordController.text));
                 }
               },
+              padding: EdgeInsets.all(15.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              color: Color.fromARGB(255, 5, 232, 185),
+              child: Text(
+                translate('pages.login_page.login'),
+                style: TextStyle(
+                  color: Color.fromARGB(255, 33, 40, 48),
+                  letterSpacing: 1.5,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
             );
           }
         },

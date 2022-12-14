@@ -24,3 +24,15 @@ final kBoxDecorationStyle = BoxDecoration(
     ),
   ],
 );
+
+final createGroupDecorationStyle = BoxDecoration(
+  color: Color.fromARGB(255, 249, 249, 249),
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 6.0,
+      offset: Offset(0, 2),
+    ),
+  ],
+);

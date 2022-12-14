@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
-import 'package:medical_devices/data/Models/Patient.dart';
+import 'package:medical_devices/data/Models/User.dart';
 import 'package:medical_devices/presentation/Pages/utilities/constants.dart';
 
 List<String> listElementsLanguage = <String>['English', 'Español'];
@@ -35,6 +35,9 @@ class _RegisterPageState extends State<RegisterPage> {
   String selectedElementGender = translate('pages.register_page.male');
   String selectedElementUseAddress = translate('pages.register_page.home');
   String selectedElementLanguage = listElementsLanguage.first;
+
+  String selectedRole = "";
+  bool managerSelected = false;
 
   final nameController = TextEditingController();
   final surnamesController = TextEditingController();
@@ -577,6 +580,117 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  Widget _buildRoleSelection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          translate('pages.register_page.select_role'),
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 20.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedRole = "PATIENT";
+                  managerSelected = false;
+                });
+              },
+              child: Container(
+                height: 140.0,
+                width: 140.0,
+                decoration: BoxDecoration(
+                  color: selectedRole == "PATIENT" ? Color.fromARGB(255, 5, 232, 185) : Color.fromARGB(190, 30, 61, 72),
+                  borderRadius: BorderRadius.circular(40.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6.0,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 24.0, 0.0, 32.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person,
+                        color: selectedRole == "PATIENT" ? Colors.black : Colors.white,
+                        size: 60.0,
+                      ),
+                      Spacer(),
+                      Text(
+                        translate('pages.register_page.role_patient'),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: selectedRole == "PATIENT" ? Colors.black : Colors.white,
+                          fontSize: 16.0,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 20.0,
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedRole = "MANAGER";
+                  managerSelected = true;
+                });
+              },
+              child: Container(
+                height: 140.0,
+                width: 140.0,
+                decoration: BoxDecoration(
+                  color: selectedRole == "MANAGER" ? Color.fromARGB(255, 5, 232, 185) : Color.fromARGB(190, 30, 61, 72),
+                  borderRadius: BorderRadius.circular(40.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6.0,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 24.0, 0.0, 32.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.settings_accessibility,
+                        color: selectedRole == "MANAGER" ? Colors.black : Colors.white,
+                        size: 60.0,
+                      ),
+                      Spacer(),
+                      Text(
+                        translate('pages.register_page.role_manager'),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: selectedRole == "MANAGER" ? Colors.black : Colors.white,
+                          fontSize: 16.0,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
   Widget _buildRegisterBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -606,7 +720,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   elevation: 5.0,
                   onPressed: () {
                     if (nameController.text.isNotEmpty && surnamesController.text.isNotEmpty && emailController.text.isNotEmpty && birthDateController.text.isNotEmpty && phoneNumberController.text.isNotEmpty && addressController.text.isNotEmpty && cityController.text.isNotEmpty && postalController.text.isNotEmpty && countryController.text.isNotEmpty && passwordController.text.isNotEmpty && repeatPasswordController.text.isNotEmpty) {
-                      Patient newPatient = Patient();
+                      User newPatient = User();
                       newPatient.password = passwordController.text;
                       newPatient.resourceType = 'Patient';
                       newPatient.active = true;
@@ -638,9 +752,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       language.coding = [coding];
                       communication.language = language;
                       newPatient.communication = [communication];
-                      print(jsonEncode(Patient.toJsonApi(newPatient)));
-
-                      BlocProvider.of<AuthorizationBloc>(context).add(RegisterEvent(newPatient));
+                      print(jsonEncode(User.toJsonApi(newPatient)));
+                      BlocProvider.of<AuthorizationBloc>(context).add(RegisterEvent(newPatient, managerSelected));
+                      Navigator.pushNamed(context, '/');
                     }
                   },
                   padding: EdgeInsets.all(15.0),
@@ -807,7 +921,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(
                         height: 30.0,
                       ),
-                      _buildRegisterBtn()
+                      _buildRoleSelection(),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      _buildRegisterBtn(),
                     ],
                   ),
                 ),

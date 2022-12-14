@@ -23,11 +23,6 @@ class DeviceMeasurementsRequestEvent extends DeviceEvent {
   List<Object?> get props => [];
 }
 
-class ConnectDeviceEvent extends DeviceEvent {
-  @override
-  List<Object?> get props => [];
-}
-
 class DeviceDoMeasureEvent extends DeviceEvent {
   final String id; //Patient ID
   final String nameDevice;

@@ -11,7 +11,7 @@ import 'package:medical_devices/business_logic/bloc/historical/historical_bloc.d
 import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
 import 'package:medical_devices/data/Models/Observation.dart';
 import 'package:medical_devices/data/Services/deviceService.dart';
-import 'package:medical_devices/data/Services/patientService.dart';
+import 'package:medical_devices/data/Services/userService.dart';
 import 'package:medical_devices/presentation/Widgets/Charts/chartPressureCard.dart';
 import 'package:medical_devices/presentation/Widgets/Charts/chartTempCard.dart';
 import 'package:medical_devices/presentation/Widgets/Charts/chartWeightCard.dart';
@@ -220,7 +220,7 @@ Widget decideChart(HistoricalVisualizationState state) {
       title: translate('pages.historical_page.titles.pressure'),
     );
   }
-  if (state.associatedDevice == translate('medical_devices.pressure_bracelet')) {
+  if (state.associatedDevice == translate('medical_devices.tensiometer')) {
     return ChartPressureCard(
       listObservations: state.visualizedObservations,
       title: translate('pages.historical_page.titles.pressure'),
