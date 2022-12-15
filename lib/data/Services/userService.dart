@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:medical_devices/data/Models/Device.dart';
+import 'package:medical_devices/data/Models/Observation.dart';
 import 'package:medical_devices/data/Models/User.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -11,6 +12,15 @@ class UserService {
 
   Future<User?> getPatientById(String id) async {
     var res = await http.get(Uri.parse('$baseUrlFhir/$id'), headers: {'accept': 'application/fhir+json'});
+    if (res.statusCode == 200) {
+      User patient = User.fromJSON(jsonDecode(res.body));
+      return patient;
+    }
+    return null;
+  }
+
+  Future<User?> getPatientFromFhir(String idApi) async {
+    var res = await http.get(Uri.parse('$baseUrlApi/fhir/$idApi'), headers: {'accept': 'application/fhir+json'});
     if (res.statusCode == 200) {
       User patient = User.fromJSON(jsonDecode(res.body));
       return patient;

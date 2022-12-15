@@ -24,10 +24,13 @@ class DeviceMeasurementsRequestEvent extends DeviceEvent {
 }
 
 class DeviceDoMeasureEvent extends DeviceEvent {
-  final String id; //Patient ID
+  final String idFhirUser;
+  final num value;
+  final num value2;
   final String nameDevice;
+  final String observationType;
 
-  DeviceDoMeasureEvent(this.id, this.nameDevice);
+  DeviceDoMeasureEvent(this.idFhirUser, this.value, this.value2, this.nameDevice, this.observationType);
   @override
-  List<Object?> get props => [id, nameDevice];
+  List<Object?> get props => [idFhirUser, value, nameDevice, observationType];
 }

@@ -97,7 +97,7 @@ class _AddUsersGroupPageState extends State<AddUsersGroupPage> {
                                 child: SizedBox(
                                   height: 60.0,
                                   width: 60.0,
-                                  child: Image.network(user.imageUrl),
+                                  child: CircleAvatar(backgroundImage: NetworkImage(user.imageUrl)),
                                 ),
                               ),
                               Padding(

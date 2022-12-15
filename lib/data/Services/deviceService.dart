@@ -27,6 +27,28 @@ class DeviceService {
     return null;
   }
 
+  Future<Observation?> addObservation(String idFhirUser, num value, num value2, String observationType) async {
+    String url = "http://localhost:3000/api/patients/observation";
+    Map<String, dynamic> bodyJson = {};
+    if (observationType == "Temperature") {
+      bodyJson = Observation.tempObservationtoJson(idFhirUser, value);
+    }
+    if (observationType == "Pressure") {
+      bodyJson = Observation.pressureObservationtoJson(idFhirUser, value, value2);
+    }
+    if (observationType == "Weight") {
+      bodyJson = Observation.weightObservationtoJson(idFhirUser, value);
+    }
+    var res = await http.post(Uri.parse(url), headers: {'content-type': 'application/json', 'accept': 'application/fhir+json'}, body: json.encode(bodyJson));
+
+    if (res.statusCode == 200) {
+      var decoded = jsonDecode(res.body);
+      var observation = Observation.fromJSON(decoded, decoded.containsKey("component"), decoded.containsKey("referenceRange"));
+      return observation;
+    }
+    return null;
+  }
+
   Future<List<Observation>?> getAllObservationsByPatient(String patientId) async {
     var res = await http.get(Uri.parse('$baseUrl?patient=$patientId'), headers: {'accept': 'application/fhir+json'});
     print(patientId);

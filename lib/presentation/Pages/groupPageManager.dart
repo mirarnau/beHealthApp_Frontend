@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, use_build_context_synchronously
 
 import 'dart:ffi';
 
@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/requests/requests_bloc.dart';
 import 'package:medical_devices/data/Models/Group.dart';
+import 'package:medical_devices/data/Models/User.dart';
+import 'package:medical_devices/data/Services/userService.dart';
 import 'package:medical_devices/presentation/Pages/infoPatientGroup.dart';
 
 class GroupPageManager extends StatefulWidget {
@@ -30,6 +32,7 @@ class _GroupPageManagerState extends State<GroupPageManager> {
 
   @override
   Widget build(BuildContext context) {
+    UserService userService = UserService();
     BlocProvider.of<RequestsBloc>(context).add(LoadRequestsGroupEvent(widget.group.id));
     return Scaffold(
       appBar: AppBar(
@@ -83,8 +86,15 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                             child: GestureDetector(
                               onTap: () {},
                               child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => InfoPatientPage(user: widget.group.patients[index])));
+                                onTap: () async {
+                                  User? userFhir = await userService.getPatientFromFhir(widget.group.patients[index].apiId);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => InfoPatientPage(
+                                                user: widget.group.patients[index],
+                                                userFhir: userFhir!,
+                                              )));
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(

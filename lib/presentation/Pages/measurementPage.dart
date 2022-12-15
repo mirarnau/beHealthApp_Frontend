@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/device/device_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/historical/historical_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
@@ -18,6 +19,7 @@ import 'package:medical_devices/presentation/Widgets/pressureMeasureCard.dart';
 import 'package:medical_devices/presentation/Widgets/thermometerMeasureCard.dart';
 import 'package:medical_devices/presentation/Widgets/weightMeasureCard.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'dart:math';
 
 class MeasurementPage extends StatefulWidget {
   const MeasurementPage({Key? key}) : super(key: key);
@@ -30,22 +32,23 @@ class _MeasurementPageState extends State<MeasurementPage> {
   late String nameDevice;
   late String idObservation;
   late String idPatient;
-
-  //DeviceService deviceService = DeviceService();
+  late num value;
+  late num value2;
+  late String observationType;
 
   void initState() {
-    //deviceService.deleteObservationById();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PatientBloc, PatientState>(
+    return BlocConsumer<AuthorizationBloc, AuthorizationState>(
       listener: (context, state) {},
       builder: (context, state) {
-        if (state is PatientLoadedState) {
-          idPatient = state.loadedPatient.id;
-          print(state.loadedPatient.id);
+        if (state is AuthorizedState) {
+          //idPatient = state.user.id;
+          idPatient = '52';
+          print(state.user.id);
         }
         return BlocConsumer<DeviceBloc, DeviceState>(
           listener: (context, state) {
@@ -112,7 +115,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
                             child: TextButton(
                               style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor, fixedSize: Size(200.0, 40.0)),
                               onPressed: () {
-                                BlocProvider.of<DeviceBloc>(context).add(DeviceDoMeasureEvent(idObservation, nameDevice));
+                                BlocProvider.of<DeviceBloc>(context).add(DeviceDoMeasureEvent(idPatient, value, value2, nameDevice, observationType));
                               },
                               child: Text(
                                 translate('pages.measurements_page.measure'),
@@ -185,11 +188,24 @@ class _MeasurementPageState extends State<MeasurementPage> {
     }
     if (state is DeviceSelectedState) {
       if (nameDevice == "Scale") {
-        idObservation = "58";
+        Random random = Random();
+        int min = 65;
+        int max = 110;
+        value = min + random.nextInt(max - min);
+        value2 = 0;
+        observationType = "Weight";
+
         return WeightMeasureCard(value: "-", unit: "Kg");
       }
       if (nameDevice == "Pressure bracelet") {
-        idObservation = "70";
+        Random random = Random();
+        int minSys = 90;
+        int maxSys = 120;
+        int minDiast = 60;
+        int maxDiast = 80;
+        value = minSys + random.nextInt(maxSys - minSys);
+        value2 = minDiast + random.nextInt(maxDiast - minDiast);
+        observationType = "Pressure";
         return PressureMeasureCard(
           sistolicValue: "-",
           diastolicValue: "-",
@@ -198,7 +214,14 @@ class _MeasurementPageState extends State<MeasurementPage> {
         );
       }
       if (nameDevice == "Tensiometer") {
-        idObservation = "70";
+        Random random = Random();
+        int minSys = 90;
+        int maxSys = 120;
+        int minDiast = 60;
+        int maxDiast = 80;
+        value = minSys + random.nextInt(maxSys - minSys);
+        value2 = minDiast + random.nextInt(maxDiast - minDiast);
+        observationType = "Pressure";
         return PressureMeasureCard(
           sistolicValue: "-",
           diastolicValue: "-",
@@ -207,7 +230,12 @@ class _MeasurementPageState extends State<MeasurementPage> {
         );
       }
       if (nameDevice == "Thermometer") {
-        idObservation = "109";
+        Random random = Random();
+        int min = 34;
+        int max = 39;
+        value = min + random.nextInt(max - min);
+        value2 = 0;
+        observationType = "Temperature";
         List<ReferenceRange> emptyReferencesList = [];
         return ThermometerMeasureCard(
           value: "-",
@@ -217,7 +245,12 @@ class _MeasurementPageState extends State<MeasurementPage> {
         );
       }
       if (nameDevice == "Temperature bracelet") {
-        idObservation = "109";
+        Random random = Random();
+        int min = 34;
+        int max = 39;
+        value = min + random.nextInt(max - min);
+        value2 = 0;
+        observationType = "Temperature";
         List<ReferenceRange> emptyReferencesList = [];
         return Column(
           children: [

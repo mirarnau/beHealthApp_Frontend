@@ -21,7 +21,8 @@ class AuthorizingState extends AuthorizationState {
 
 class AuthorizedState extends AuthorizationState {
   final User user;
-  const AuthorizedState(this.user);
+  final User userFhir;
+  const AuthorizedState(this.user, this.userFhir);
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [user, userFhir];
 }

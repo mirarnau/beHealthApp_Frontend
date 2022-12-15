@@ -10,7 +10,8 @@ import 'package:medical_devices/presentation/Widgets/deviceCardInfo.dart';
 
 class InfoPatientPage extends StatefulWidget {
   final User user;
-  const InfoPatientPage({Key? key, required this.user}) : super(key: key);
+  final User userFhir;
+  const InfoPatientPage({Key? key, required this.user, required this.userFhir}) : super(key: key);
 
   @override
   _InfoPatientPageState createState() => _InfoPatientPageState();
@@ -73,7 +74,7 @@ class _InfoPatientPageState extends State<InfoPatientPage> {
                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
                               ),
                               Text(
-                                'C/ Diagonal 3 ',
+                                widget.userFhir.address[0].line[0],
                                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
                               ),
                             ],
@@ -92,7 +93,7 @@ class _InfoPatientPageState extends State<InfoPatientPage> {
                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
                               ),
                               Text(
-                                'Example City ',
+                                widget.userFhir.address[0].city,
                                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
                               ),
                             ],
@@ -111,7 +112,7 @@ class _InfoPatientPageState extends State<InfoPatientPage> {
                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
                               ),
                               Text(
-                                'Example Country ',
+                                widget.userFhir.address[0].country,
                                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
                               ),
                             ],
@@ -130,7 +131,7 @@ class _InfoPatientPageState extends State<InfoPatientPage> {
                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
                               ),
                               Text(
-                                '+3460836738',
+                                widget.userFhir.telecom[0].value,
                                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
                               ),
                             ],

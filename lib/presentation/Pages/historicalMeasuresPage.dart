@@ -1,25 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/device/device_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/historical/historical_bloc.dart';
-import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
 import 'package:medical_devices/data/Models/Observation.dart';
-import 'package:medical_devices/data/Services/deviceService.dart';
-import 'package:medical_devices/data/Services/userService.dart';
 import 'package:medical_devices/presentation/Widgets/Charts/chartPressureCard.dart';
 import 'package:medical_devices/presentation/Widgets/Charts/chartTempCard.dart';
 import 'package:medical_devices/presentation/Widgets/Charts/chartWeightCard.dart';
-import 'package:medical_devices/presentation/Widgets/deviceCard.dart';
-import 'package:medical_devices/presentation/Widgets/pressureMeasureCard.dart';
-import 'package:medical_devices/presentation/Widgets/thermometerMeasureCard.dart';
-import 'package:medical_devices/presentation/Widgets/weightMeasureCard.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class HistoricalMeasurementsPage extends StatefulWidget {
   const HistoricalMeasurementsPage({Key? key}) : super(key: key);

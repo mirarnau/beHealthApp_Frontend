@@ -21,7 +21,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     on<DeviceDoMeasureEvent>((event, emit) async {
       emit(DeviceMeasuringState());
       await Future.delayed(Duration(seconds: 3));
-      final response = await _deviceService.getObservationById(event.id);
+      final response = await _deviceService.addObservation(event.idFhirUser, event.value, event.value2, event.observationType);
       if (response != null) {
         emit(DeviceMeasureDoneState(response, event.nameDevice));
       }

@@ -42,6 +42,147 @@ class Observation {
 
     return observation;
   }
+
+  static Map<String, dynamic> tempObservationtoJson(String idFhirUser, num value) {
+    return {
+      "resourceType": "Observation",
+      "id": "0",
+      "status": "final",
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+              "code": "vital-signs",
+              "display": "Vital Signs",
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://loinc.org",
+            "code": "8310-5",
+            "display": "Body temperature",
+          }
+        ],
+        "text": "Temperature",
+      },
+      "subject": {
+        "reference": "Patient/$idFhirUser",
+      },
+      "effectiveDateTime": '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+      "valueQuantity": {
+        "value": value,
+        "unit": "degrees C",
+        "system": "http://unitsofmeasure.org",
+        "code": "Cel",
+      },
+      "referenceRange": [
+        {
+          "high": {
+            "value": 37.2,
+            "unit": "degrees C",
+          },
+          "low": {
+            "value": 36.1,
+            "unit": "degrees C",
+          }
+        }
+      ]
+    };
+  }
+
+  static Map<String, dynamic> weightObservationtoJson(String idFhirUser, num value) {
+    return {
+      "resourceType": "Observation",
+      "id": "0",
+      "status": "final",
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+              "code": "vital-signs",
+              "display": "Vital Signs",
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://loinc.org",
+            "code": "29463-7",
+            "display": "Body Weight",
+          }
+        ],
+        "text": "Body weight",
+      },
+      "subject": {
+        "reference": "Patient/$idFhirUser",
+      },
+      "effectiveDateTime": '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+      "valueQuantity": {
+        "value": value,
+        "unit": "kg",
+        "system": "http://unitsofmeasure.org",
+        "code": "kg",
+      },
+    };
+  }
+
+  static Map<String, dynamic> pressureObservationtoJson(String idFhirUser, num valueSystolic, num valueDiastolic) {
+    return {
+      "resourceType": "Observation",
+      "id": "0",
+      "status": "final",
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+              "code": "vital-signs",
+              "display": "Vital Signs",
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://loinc.org",
+            "code": "85354-9",
+            "display": "Blood pressure panel with all children optional",
+          }
+        ],
+        "text": "Blood pressure systolic & diastolic",
+      },
+      "subject": {
+        "reference": "Patient/$idFhirUser",
+      },
+      "effectiveDateTime": '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+      "component": [
+        {
+          "code": {
+            "coding": [
+              {"system": "http://loinc.org", "code": "8480-6", "display": "Systolic blood pressure"},
+            ]
+          },
+          "valueQuantity": {"value": valueSystolic, "unit": "mmHg", "system": "http://unitsofmeasure.org", "code": "mm[Hg]"}
+        },
+        {
+          "code": {
+            "coding": [
+              {"system": "http://loinc.org", "code": "8462-4", "display": "Diastolic blood pressure"}
+            ]
+          },
+          "valueQuantity": {"value": valueDiastolic, "unit": "mmHg", "system": "http://unitsofmeasure.org", "code": "mm[Hg]"}
+        }
+      ],
+    };
+  }
 }
 
 class Category {
