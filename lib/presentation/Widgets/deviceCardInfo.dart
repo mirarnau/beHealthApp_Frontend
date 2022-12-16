@@ -5,14 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/connection/connection_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/device/device_bloc.dart';
+import 'package:medical_devices/data/Models/User.dart';
+import 'package:medical_devices/presentation/Pages/measurementsPatientGroup.dart';
 
 class DeviceCardInfo extends StatelessWidget {
   final String nameDevice;
   final String photoDevice;
   final String modelDevice;
   final bool verified;
+  final User patient;
 
-  DeviceCardInfo({required this.nameDevice, required this.photoDevice, required this.modelDevice, required this.verified});
+  DeviceCardInfo({required this.nameDevice, required this.photoDevice, required this.modelDevice, required this.verified, required this.patient});
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +94,16 @@ class DeviceCardInfo extends StatelessWidget {
                         backgroundColor: Theme.of(context).primaryColor,
                         fixedSize: Size(150.0, 40.0),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MeasurementsPatientGroup(
+                                      selectedDevice: nameDevice,
+                                      patient: patient,
+                                      photoDevice: photoDevice,
+                                    )));
+                      },
                       child: Center(
                         child: Text(
                           'Measurements',

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
+import 'package:medical_devices/data/Services/deviceService.dart';
 import 'package:medical_devices/presentation/Pages/mainPage.dart';
 import 'package:medical_devices/presentation/Pages/utilities/constants.dart';
 
@@ -19,6 +20,8 @@ class _LoginPageState extends State<LoginPage> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  final DeviceService deviceService = DeviceService();
 
   void initState() {
     changeLocale(context, 'en');
@@ -276,6 +279,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    //deviceService.deleteObservationById();
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,

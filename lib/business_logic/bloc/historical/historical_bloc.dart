@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:medical_devices/data/Models/Observation.dart';
@@ -14,6 +16,8 @@ class HistoricalBloc extends Bloc<HistoricalEvent, HistoricalState> {
       final response = await _deviceService.getAllObservationsByPatient(event.idPatient);
       if (response != null) {
         emit(HistoricalLoadedState(response));
+      } else {
+        emit(HistoricalLoadedState([]));
       }
     });
     on<SelectHistoricalVisualizationEvent>((event, emit) {

@@ -193,6 +193,7 @@ class _InfoPatientPageState extends State<InfoPatientPage> {
           photoDevice: widget.user.listDevices[i].photoDevice,
           modelDevice: widget.user.listDevices[i].modelDevice,
           verified: widget.user.listDevices[i].verified,
+          patient: widget.user,
         ));
       }
       return Padding(

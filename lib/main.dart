@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
                     scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
                     canvasColor: Color.fromARGB(255, 255, 255, 255),
                     backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                    cardColor: Color.fromARGB(255, 30, 61, 72), //For the appbar and nav bar icons
+                    cardColor: Color.fromARGB(255, 30, 61, 72),
                     focusColor: Color.fromARGB(255, 255, 255, 255),
                     indicatorColor: Color.fromARGB(255, 217, 105, 105),
                     shadowColor: Color.fromARGB(255, 170, 170, 170),

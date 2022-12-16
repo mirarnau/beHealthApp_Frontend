@@ -9,6 +9,7 @@ import 'package:medical_devices/business_logic/bloc/authorization/authorization_
 import 'package:medical_devices/presentation/Pages/devicesPage.dart';
 import 'package:medical_devices/presentation/Pages/groupsManagerPage.dart';
 import 'package:medical_devices/presentation/Pages/groupsPatientPage.dart';
+import 'package:medical_devices/presentation/Pages/profilePage.dart';
 
 class MainPage extends StatefulWidget {
   final int selectedIndex;
@@ -22,8 +23,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   late int _selectedIndex = widget.selectedIndex;
 
-  late final screensManager = [GroupsManagerPage(), DevicesPage(), Text(translate('nav_bar.my_health'))];
-  late final screensPatient = [GroupsPatientPage(), DevicesPage(), Text(translate('nav_bar.my_health'))];
+  late final screensManager = [GroupsManagerPage(), DevicesPage(), ProfilePage()];
+  late final screensPatient = [GroupsPatientPage(), DevicesPage(), ProfilePage()];
   late var screens;
 
   void _onItemTapped(int index) {

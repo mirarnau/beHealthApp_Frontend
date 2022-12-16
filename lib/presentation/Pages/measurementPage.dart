@@ -46,8 +46,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is AuthorizedState) {
-          //idPatient = state.user.id;
-          idPatient = '52';
+          idPatient = state.user.id;
           print(state.user.id);
         }
         return BlocConsumer<DeviceBloc, DeviceState>(

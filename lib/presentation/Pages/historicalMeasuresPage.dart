@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,6 +100,34 @@ class _HistoricalMeasurementsPageState extends State<HistoricalMeasurementsPage>
                               ));
                             }
                             if (state is HistoricalVisualizationState) {
+                              if (state.visualizedObservations.isEmpty) {
+                                return Padding(
+                                  padding: const EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "You don't have measurements for this device yet",
+                                          style: TextStyle(
+                                            color: Color.fromARGB(255, 30, 61, 72),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16.0,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 30.0,
+                                        ),
+                                        Icon(
+                                          Icons.question_mark,
+                                          size: 100.0,
+                                          color: Color.fromARGB(255, 30, 61, 72),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
                               return Padding(
                                 padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
                                 child: decideChart(state),

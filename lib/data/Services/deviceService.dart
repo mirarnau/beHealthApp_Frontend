@@ -55,9 +55,9 @@ class DeviceService {
     List<Observation> allObservationsPatient = [];
     var jsonContainsComponents = false;
     var jsonContainsReferences = false;
+    var decoded = jsonDecode(res.body);
 
-    if (res.statusCode == 200) {
-      var decoded = jsonDecode(res.body);
+    if (decoded["total"] != 0) {
       var observationsDecoded = decoded["entry"];
       observationsDecoded.forEach((observation) {
         if (observation["resource"].containsKey("component")) {
@@ -79,10 +79,8 @@ class DeviceService {
 
 //MUST BE DELETED IN THE END
   Future<void> deleteObservationById() async {
-    for (int id = 0; id < 200; id++) {
-      if ((id != 77) && (id != 70) && (id != 58)) {
-        await http.delete(Uri.parse('$baseUrl/$id'), headers: {'accept': 'application/fhir+json'});
-      }
+    for (int id = 0; id < 1000; id++) {
+      await http.delete(Uri.parse('$baseUrl/$id'), headers: {'accept': 'application/fhir+json'});
     }
   }
 }
