@@ -22,7 +22,6 @@ class _GroupsManagerPageState extends State<GroupsManagerPage> {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<GroupsBloc>(context).add(GoToIdleEvent());
     return Scaffold(
       body: BlocConsumer<AuthorizationBloc, AuthorizationState>(
         listener: (context, stateAuth) {},

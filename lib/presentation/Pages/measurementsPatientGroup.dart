@@ -122,11 +122,8 @@ class _MeasurementsPatientGroupState extends State<MeasurementsPatientGroup> {
                       padding: const EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 400.0),
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                              color: Color.fromARGB(255, 30, 61, 72),
-                              width: 1,
-                            )),
+                          color: Colors.white,
+                        ),
                         child: decideChart(state),
                       ),
                     ),

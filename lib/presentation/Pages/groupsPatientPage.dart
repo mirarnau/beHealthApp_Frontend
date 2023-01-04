@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
+import 'package:medical_devices/business_logic/bloc/conversation/conversation_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/groups/groups_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/requests/requests_bloc.dart';
 import 'package:medical_devices/data/Models/Group.dart';
+import 'package:medical_devices/presentation/Pages/chatPage.dart';
 
 class GroupsPatientPage extends StatefulWidget {
   const GroupsPatientPage({Key? key}) : super(key: key);
@@ -33,16 +35,16 @@ class _GroupsPatientPageState extends State<GroupsPatientPage> {
     BlocProvider.of<GroupsBloc>(context).add(GoToIdleEvent());
     BlocProvider.of<RequestsBloc>(context).add(GoToUnloadedEvent());
     return BlocBuilder<AuthorizationBloc, AuthorizationState>(
-      builder: (context, state) {
-        if (state is AuthorizedState) {
-          idPatient = state.user.apiId;
+      builder: (context, stateAuth) {
+        if (stateAuth is AuthorizedState) {
+          idPatient = stateAuth.user.apiId;
         }
         return Scaffold(
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               DefaultTabController(
-                length: 2,
+                length: 3,
                 child: Column(
                   children: [
                     TabBar(
@@ -55,6 +57,9 @@ class _GroupsPatientPageState extends State<GroupsPatientPage> {
                         ),
                         Tab(
                           child: Text('Groups'),
+                        ),
+                        Tab(
+                          child: Text('Chats'),
                         ),
                       ],
                     ),
@@ -295,6 +300,118 @@ class _GroupsPatientPageState extends State<GroupsPatientPage> {
                               }
                             },
                           ),
+                          BlocBuilder<ConversationBloc, ConversationState>(
+                            builder: (context, state) {
+                              if (state is ConversationsLoadedState) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: state.listConversations.length,
+                                  itemBuilder: ((context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => ChatPage(
+                                                        receiver: state.listConversations[index].manager,
+                                                        groupName: state.listConversations[index].groupName,
+                                                        groupId: state.listConversations[index].groupId,
+                                                        managerId: state.listConversations[index].manager.apiId,
+                                                        isManager: false,
+                                                      )));
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(
+                                            20.0,
+                                          )),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: SizedBox(
+                                              width: 60.0,
+                                              height: 60.0,
+                                              child: Row(
+                                                children: [
+                                                  CircleAvatar(
+                                                    radius: 30.0,
+                                                    backgroundImage: NetworkImage(state.listConversations[index].manager.imageUrl),
+                                                  ),
+                                                  SizedBox(width: 10.0),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        state.listConversations[index].manager.fullName,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 15.0,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        state.listConversations[index].manager.email,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.normal,
+                                                          fontSize: 13.0,
+                                                        ),
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.manage_accounts,
+                                                            color: Colors.blue,
+                                                          ),
+                                                          SizedBox(width: 2.0),
+                                                          Text(
+                                                            state.listConversations[index].groupName,
+                                                            style: TextStyle(
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 13.0,
+                                                              color: Colors.blue,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                );
+                              }
+                              if (state is NoConversationsState) {
+                                return Center(
+                                  child: Text('No conversations'),
+                                );
+                              }
+                              if (state is ConversationsLoadingState) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              if (state is ConversationSingleLoadedState) {
+                                return Center(
+                                  child: Text(''),
+                                );
+                              }
+                              if (state is ConversationsIdleConversationsState) {
+                                BlocProvider.of<ConversationBloc>(context).add(LoadConversationsPatientEvent(idPatient));
+                                return Center(
+                                  child: Text(''),
+                                );
+                              } else {
+                                return Center(
+                                  child: Text('IDLE CHAT STATE'),
+                                );
+                              }
+                            },
+                          )
                         ],
                       ),
                     )

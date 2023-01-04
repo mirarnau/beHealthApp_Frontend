@@ -214,10 +214,10 @@ class _MeasurementPageState extends State<MeasurementPage> {
       }
       if (nameDevice == "Tensiometer") {
         Random random = Random();
-        int minSys = 90;
-        int maxSys = 120;
-        int minDiast = 60;
-        int maxDiast = 80;
+        int minSys = 60;
+        int maxSys = 70;
+        int minDiast = 83;
+        int maxDiast = 90;
         value = minSys + random.nextInt(maxSys - minSys);
         value2 = minDiast + random.nextInt(maxDiast - minDiast);
         observationType = "Pressure";

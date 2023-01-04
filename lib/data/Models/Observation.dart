@@ -1,5 +1,8 @@
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 import 'package:medical_devices/data/Models/User.dart';
+
+var outputFormat = DateFormat('yyyy-MM-dd');
 
 class Observation {
   late final String id;
@@ -72,7 +75,7 @@ class Observation {
       "subject": {
         "reference": "Patient/$idFhirUser",
       },
-      "effectiveDateTime": '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+      "effectiveDateTime": outputFormat.format(DateTime.now()),
       "valueQuantity": {
         "value": value,
         "unit": "degrees C",
@@ -123,7 +126,7 @@ class Observation {
       "subject": {
         "reference": "Patient/$idFhirUser",
       },
-      "effectiveDateTime": '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+      "effectiveDateTime": outputFormat.format(DateTime.now()),
       "valueQuantity": {
         "value": value,
         "unit": "kg",
@@ -162,7 +165,7 @@ class Observation {
       "subject": {
         "reference": "Patient/$idFhirUser",
       },
-      "effectiveDateTime": '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+      "effectiveDateTime": outputFormat.format(DateTime.now()),
       "component": [
         {
           "code": {
@@ -170,7 +173,19 @@ class Observation {
               {"system": "http://loinc.org", "code": "8480-6", "display": "Systolic blood pressure"},
             ]
           },
-          "valueQuantity": {"value": valueSystolic, "unit": "mmHg", "system": "http://unitsofmeasure.org", "code": "mm[Hg]"}
+          "valueQuantity": {"value": valueSystolic, "unit": "mmHg", "system": "http://unitsofmeasure.org", "code": "mm[Hg]"},
+          "referenceRange": [
+            {
+              "high": {
+                "value": 120.0,
+                "unit": "mmHg",
+              },
+              "low": {
+                "value": 90.0,
+                "unit": "mmHg",
+              }
+            }
+          ]
         },
         {
           "code": {
@@ -178,7 +193,19 @@ class Observation {
               {"system": "http://loinc.org", "code": "8462-4", "display": "Diastolic blood pressure"}
             ]
           },
-          "valueQuantity": {"value": valueDiastolic, "unit": "mmHg", "system": "http://unitsofmeasure.org", "code": "mm[Hg]"}
+          "valueQuantity": {"value": valueDiastolic, "unit": "mmHg", "system": "http://unitsofmeasure.org", "code": "mm[Hg]"},
+          "referenceRange": [
+            {
+              "high": {
+                "value": 80.0,
+                "unit": "mmHg",
+              },
+              "low": {
+                "value": 60.0,
+                "unit": "mmHg",
+              }
+            }
+          ]
         }
       ],
     };
@@ -239,12 +266,18 @@ class ValueQuantity {
 class Component {
   late final Code code;
   late final ValueQuantity valueQuantity;
+  late final List<ReferenceRange> referenceRangeComponent;
 
   Component();
   factory Component.fromJSON(dynamic json) {
     Component component = Component();
     component.code = Code.fromJSON(json['code']);
     component.valueQuantity = ValueQuantity.fromJSON(json['valueQuantity']);
+    if (json.containsKey("referenceRange")) {
+      final referencesData = json['referenceRange'] as List<dynamic>?;
+      final referencesList = referencesData != null ? referencesData.map((reference) => ReferenceRange.fromJSON(reference)).toList() : <ReferenceRange>[];
+      component.referenceRangeComponent = referencesList;
+    }
     return component;
   }
 }

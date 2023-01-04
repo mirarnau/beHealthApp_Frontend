@@ -3,15 +3,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:medical_devices/data/Models/Group.dart';
 import 'package:medical_devices/data/Models/User.dart';
 import 'package:medical_devices/data/Services/userService.dart';
+import 'package:medical_devices/presentation/Pages/chatPage.dart';
 import 'package:medical_devices/presentation/Widgets/deviceCard.dart';
 import 'package:medical_devices/presentation/Widgets/deviceCardInfo.dart';
 
 class InfoPatientPage extends StatefulWidget {
   final User user;
   final User userFhir;
-  const InfoPatientPage({Key? key, required this.user, required this.userFhir}) : super(key: key);
+  final Group group;
+  const InfoPatientPage({Key? key, required this.user, required this.userFhir, required this.group}) : super(key: key);
 
   @override
   _InfoPatientPageState createState() => _InfoPatientPageState();
@@ -63,82 +66,119 @@ class _InfoPatientPageState extends State<InfoPatientPage> {
                       widget.user.email,
                       style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16.0, color: Color.fromARGB(255, 216, 216, 216)),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 30.0, 0.0, 0.0),
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                translate('pages.info_patient.address'),
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20.0, 30.0, 0.0, 0.0),
+                              child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        translate('pages.info_patient.address'),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
+                                      ),
+                                      Text(
+                                        widget.userFhir.address[0].line[0],
+                                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              Text(
-                                widget.userFhir.address[0].line[0],
-                                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
+                              child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        translate('pages.info_patient.city'),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
+                                      ),
+                                      Text(
+                                        widget.userFhir.address[0].city,
+                                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
+                              child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        translate('pages.info_patient.country'),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
+                                      ),
+                                      Text(
+                                        widget.userFhir.address[0].country,
+                                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
+                              child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        translate('pages.info_patient.phone_number'),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
+                                      ),
+                                      Text(
+                                        widget.userFhir.telecom[0].value,
+                                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 40.0),
+                          child: SizedBox(
+                            height: 60.0,
+                            width: 60.0,
+                            child: FloatingActionButton(
+                              backgroundColor: Theme.of(context).primaryColor,
+                              child: Icon(
+                                Icons.chat,
+                                size: 30.0,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChatPage(
+                                              receiver: widget.user,
+                                              groupName: widget.group.name,
+                                              groupId: widget.group.id,
+                                              managerId: widget.group.manager.apiId,
+                                              isManager: true,
+                                            )));
+                              },
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                translate('pages.info_patient.city'),
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
-                              ),
-                              Text(
-                                widget.userFhir.address[0].city,
-                                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                translate('pages.info_patient.country'),
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
-                              ),
-                              Text(
-                                widget.userFhir.address[0].country,
-                                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                translate('pages.info_patient.phone_number'),
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Color.fromARGB(255, 216, 216, 216)),
-                              ),
-                              Text(
-                                widget.userFhir.telecom[0].value,
-                                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -197,7 +237,7 @@ class _InfoPatientPageState extends State<InfoPatientPage> {
         ));
       }
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 40.0),
+        padding: const EdgeInsets.symmetric(vertical: 30.0),
         child: CarouselSlider(
             items: listCards,
             options: CarouselOptions(

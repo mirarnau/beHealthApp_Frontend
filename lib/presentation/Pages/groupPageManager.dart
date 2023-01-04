@@ -1,14 +1,14 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, use_build_context_synchronously
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:medical_devices/business_logic/bloc/conversation/conversation_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/requests/requests_bloc.dart';
 import 'package:medical_devices/data/Models/Group.dart';
 import 'package:medical_devices/data/Models/User.dart';
 import 'package:medical_devices/data/Services/userService.dart';
+import 'package:medical_devices/presentation/Pages/chatPage.dart';
 import 'package:medical_devices/presentation/Pages/infoPatientGroup.dart';
 
 class GroupPageManager extends StatefulWidget {
@@ -32,8 +32,8 @@ class _GroupPageManagerState extends State<GroupPageManager> {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<ConversationBloc>(context).add(ConversationToIdleConversationEvent());
     UserService userService = UserService();
-    BlocProvider.of<RequestsBloc>(context).add(LoadRequestsGroupEvent(widget.group.id));
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -44,7 +44,7 @@ class _GroupPageManagerState extends State<GroupPageManager> {
         ),
         backgroundColor: Theme.of(context).cardColor,
         title: Text(
-          translate('titles.beHealthApp'),
+          widget.group.name,
           style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
         ),
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.chat_bubble_rounded))],
@@ -65,10 +65,10 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                       child: Text('Users'),
                     ),
                     Tab(
-                      child: Text('Charts'),
+                      child: Text('Data'),
                     ),
                     Tab(
-                      child: Text('Requests'),
+                      child: Text('Chats'),
                     ),
                   ],
                 ),
@@ -94,6 +94,7 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                                           builder: (context) => InfoPatientPage(
                                                 user: widget.group.patients[index],
                                                 userFhir: userFhir!,
+                                                group: widget.group,
                                               )));
                                 },
                                 child: Container(
@@ -165,21 +166,30 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                           );
                         }),
                       ),
-                      Text('Charts'),
-                      BlocBuilder<RequestsBloc, RequestsState>(
+                      Column(),
+                      BlocBuilder<ConversationBloc, ConversationState>(
                         builder: (context, state) {
-                          if (state is RequestsLoadedState) {
-                            for (int i = 0; i < state.jsonRequests.length; i++) {
-                              idPatientsRequests.add(state.jsonRequests[i]['patient']['_id']);
-                            }
+                          print(state);
+                          if (state is ConversationsLoadedState) {
                             return ListView.builder(
                               shrinkWrap: true,
-                              itemCount: state.jsonRequests.length,
+                              itemCount: state.listConversations.length,
                               itemBuilder: ((context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
                                   child: GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ChatPage(
+                                                    receiver: state.listConversations[index].patient,
+                                                    groupName: state.listConversations[index].groupName,
+                                                    groupId: state.listConversations[index].groupId,
+                                                    managerId: state.listConversations[index].manager.apiId,
+                                                    isManager: true,
+                                                  )));
+                                    },
                                     child: Container(
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
@@ -194,28 +204,34 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                                             children: [
                                               CircleAvatar(
                                                 radius: 30.0,
-                                                backgroundImage: NetworkImage(state.jsonRequests[index]['patient']['image_url']),
+                                                backgroundImage: NetworkImage(state.listConversations[index].patient.imageUrl),
                                               ),
                                               SizedBox(width: 10.0),
                                               Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    state.jsonRequests[index]['patient']['full_name'],
+                                                    state.listConversations[index].patient.fullName,
                                                     style: TextStyle(
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 15.0,
                                                     ),
                                                   ),
                                                   Text(
-                                                    state.jsonRequests[index]['patient']['email'],
+                                                    state.listConversations[index].patient.email,
                                                     style: TextStyle(
                                                       fontWeight: FontWeight.normal,
                                                       fontSize: 13.0,
                                                     ),
                                                   ),
                                                 ],
-                                              )
+                                              ),
+                                              Spacer(),
+                                              Icon(
+                                                Icons.circle,
+                                                color: Theme.of(context).primaryColor,
+                                                size: 20.0,
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -226,13 +242,13 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                               }),
                             );
                           }
-                          if (state is NoRequestsState) {
+                          if (state is NoConversationsState) {
                             return Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    translate('pages.groups_page.no_requests'),
+                                    translate('No chats'),
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 30, 61, 72),
                                       fontWeight: FontWeight.bold,
@@ -241,15 +257,31 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                                   ),
                                   SizedBox(height: 10.0),
                                   Icon(
-                                    Icons.group_off,
+                                    Icons.chat,
                                     size: 100.0,
                                     color: Color.fromARGB(255, 30, 61, 72),
                                   )
                                 ],
                               ),
                             );
-                          } else {
+                          }
+                          if (state is ConversationsLoadingState) {
                             return Center(child: CircularProgressIndicator());
+                          }
+                          if (state is ConversationSingleLoadedState) {
+                            return Center(
+                              child: Text(''),
+                            );
+                          }
+                          if (state is ConversationsIdleConversationsState) {
+                            BlocProvider.of<ConversationBloc>(context).add(LoadConversationsGroupEvent(widget.group.id));
+                            return Center(
+                              child: Text(''),
+                            );
+                          } else {
+                            return Center(
+                              child: Text('IDLE CHAT STATE'),
+                            );
                           }
                         },
                       ),

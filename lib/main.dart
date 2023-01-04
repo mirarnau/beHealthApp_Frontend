@@ -7,12 +7,15 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/connection/connection_bloc.dart';
+import 'package:medical_devices/business_logic/bloc/conversation/conversation_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/device/device_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/groups/groups_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/historical/historical_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/patient/patient_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/requests/requests_bloc.dart';
+import 'package:medical_devices/data/Models/Conversation.dart';
 import 'package:medical_devices/data/Models/Group.dart';
+import 'package:medical_devices/data/Services/conversationService.dart';
 import 'package:medical_devices/data/Services/deviceService.dart';
 import 'package:medical_devices/data/Services/groupService.dart';
 import 'package:medical_devices/data/Services/userService.dart';
@@ -37,6 +40,7 @@ class MyApp extends StatelessWidget {
     UserService patientService = UserService();
     DeviceService deviceService = DeviceService();
     GroupService groupService = GroupService();
+    ConversationService conversationService = ConversationService();
 
     return MultiBlocProvider(
       providers: [
@@ -57,6 +61,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => RequestsBloc(groupService),
+        ),
+        BlocProvider(
+          create: (context) => ConversationBloc(conversationService),
         ),
       ],
       child: LocalizationProvider(

@@ -20,6 +20,8 @@ class User {
   late final String fullName;
   late final String email;
   late final List<Device> listDevices;
+  late final List<FootstepsData> footsteps;
+  late final num todayFootsteps;
 
   User();
 
@@ -68,6 +70,10 @@ class User {
       final listDevices = devicesData != null ? devicesData.map((device) => Device.fromJSON(device)).toList() : <Device>[];
       patient.listDevices = listDevices;
     }
+    final footstepsData = json['footsteps'] as List<dynamic>?;
+    final listFootSteps = footstepsData != null ? footstepsData.map((footstep) => FootstepsData.fromJSON(footstep)).toList() : <FootstepsData>[];
+    patient.footsteps = listFootSteps;
+    patient.todayFootsteps = json['today_footsteps'];
     return patient;
   }
 
@@ -188,3 +194,23 @@ class Coding {
     return coding;
   }
 }
+
+class FootstepsData {
+  late final DateTime dateTime;
+  late final num numSteps;
+  FootstepsData();
+  factory FootstepsData.fromJSON(dynamic json) {
+    FootstepsData footstepsData = FootstepsData();
+    footstepsData.dateTime = json['date'];
+    footstepsData.numSteps = json['num_steps'];
+    return footstepsData;
+  }
+}
+
+
+/*
+PROFILE PICS
+Arnau -> https://i.pinimg.com/736x/81/67/b1/8167b1b499e349324ec5d5fc276726c4--persian-kittens-animal-fun.jpg
+Bianca -> https://media.donedeal.ie/eyJidWNrZXQiOiJkb25lZGVhbC5pZS1waG90b3MiLCJlZGl0cyI6eyJ0b0Zvcm1hdCI6ImpwZWciLCJyZXNpemUiOnsiZml0IjoiaW5zaWRlIiwid2lkdGgiOjYwMCwiaGVpZ2h0Ijo2MDB9fSwia2V5IjoicGhvdG9fMjM5ODU5ODYwIn0=?signature=68b806698af8a57c685d7b2232c9b67a581eb855acaa1319ca90565196af768a
+Henry -> https://www.hogarmania.com/archivos/202207/gato-negro-1280x720x80xX-1.jpg
+*/
