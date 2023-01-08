@@ -13,7 +13,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
       emit(ConversationsLoadingState());
       var res = await _conversationService.createConversation(event.idManager, event.idPatient, event.idGroup);
       if (res != null) {
-        emit(ConversationsIdleConversationsState());
+        emit(ConversationsIdleChatState());
       }
     });
     on<LoadConversationsPatientEvent>((event, emit) async {

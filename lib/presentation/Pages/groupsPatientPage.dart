@@ -9,6 +9,8 @@ import 'package:medical_devices/business_logic/bloc/groups/groups_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/requests/requests_bloc.dart';
 import 'package:medical_devices/data/Models/Group.dart';
 import 'package:medical_devices/presentation/Pages/chatPage.dart';
+import 'package:medical_devices/presentation/Pages/infoStepsManager.dart';
+import 'package:medical_devices/presentation/Pages/infoStepsPatient.dart';
 
 class GroupsPatientPage extends StatefulWidget {
   const GroupsPatientPage({Key? key}) : super(key: key);
@@ -223,7 +225,9 @@ class _GroupsPatientPageState extends State<GroupsPatientPage> {
                                         return Padding(
                                           padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
                                           child: GestureDetector(
-                                            onTap: () {},
+                                            onTap: () {
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) => InfoStepsPatientPage(group: state.listGroups[index])));
+                                            },
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(
@@ -387,7 +391,25 @@ class _GroupsPatientPageState extends State<GroupsPatientPage> {
                               }
                               if (state is NoConversationsState) {
                                 return Center(
-                                  child: Text('No conversations'),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        translate('No chats'),
+                                        style: TextStyle(
+                                          color: Color.fromARGB(255, 30, 61, 72),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Icon(
+                                        Icons.chat,
+                                        size: 100.0,
+                                        color: Color.fromARGB(255, 30, 61, 72),
+                                      )
+                                    ],
+                                  ),
                                 );
                               }
                               if (state is ConversationsLoadingState) {

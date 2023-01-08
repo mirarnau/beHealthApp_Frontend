@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:medical_devices/data/Models/Group.dart';
 import 'package:medical_devices/data/Models/User.dart';
-import 'package:medical_devices/data/Services/userService.dart';
 import 'package:medical_devices/presentation/Pages/chatPage.dart';
-import 'package:medical_devices/presentation/Widgets/deviceCard.dart';
 import 'package:medical_devices/presentation/Widgets/deviceCardInfo.dart';
 
 class InfoPatientPage extends StatefulWidget {

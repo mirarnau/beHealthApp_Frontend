@@ -107,4 +107,28 @@ class GroupService {
     }
     return null;
   }
+
+  Future<Group?> storeTotalAverageSteps(String idGroup, DateTime dateTime) async {
+    var bodyJson = {
+      'id': idGroup,
+      'date': dateTime.toString(),
+    };
+    var res = await http.post(Uri.parse('$baseUrlApi/average'), headers: {'content-type': 'application/json'}, body: json.encode(bodyJson));
+
+    if (res.statusCode == 200) {
+      var decoded = jsonDecode(res.body);
+      var updatedGroup = Group.fromJSON(decoded);
+      return updatedGroup;
+    }
+    return null;
+  }
+
+  Future<dynamic> getAverages(String idGroup) async {
+    var res = await http.get(Uri.parse('$baseUrlApi/averages/$idGroup'), headers: {'accept': 'application/json'});
+    if (res.statusCode == 200) {
+      var decoded = jsonDecode(res.body);
+      return decoded;
+    }
+    return null;
+  }
 }

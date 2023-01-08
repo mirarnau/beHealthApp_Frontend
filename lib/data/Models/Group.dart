@@ -8,6 +8,7 @@ class Group {
   late final List<User> patients;
   late final List<GroupRequestGenerated> requests;
   late final String creationDate;
+  late final List<DailyStepsAverage> dailyStepsAverages;
 
   Group();
   factory Group.fromJSON(dynamic json) {
@@ -23,6 +24,9 @@ class Group {
     final listRequests = requestsData != null ? requestsData.map((request) => GroupRequestGenerated.fromJSON(request)).toList() : <GroupRequestGenerated>[];
     group.requests = listRequests;
     group.creationDate = json['creationDate'];
+    final stepsData = json['dailyStepsAverages'] as List<dynamic>?;
+    final listStepsData = stepsData != null ? stepsData.map((stepData) => DailyStepsAverage.fromJSON(stepData)).toList() : <DailyStepsAverage>[];
+    group.dailyStepsAverages = listStepsData;
     return group;
   }
 
@@ -84,5 +88,17 @@ class GroupRequestReceived {
     groupRequest.patient = User.fromJSON(json['patient']);
     groupRequest.creationDate = json['creationDate'];
     return groupRequest;
+  }
+}
+
+class DailyStepsAverage {
+  late final DateTime date;
+  late final num value;
+  DailyStepsAverage();
+  factory DailyStepsAverage.fromJSON(dynamic json) {
+    DailyStepsAverage dailyStepsAverage = DailyStepsAverage();
+    dailyStepsAverage.date = DateTime.parse(json['date']);
+    dailyStepsAverage.value = json['value'];
+    return dailyStepsAverage;
   }
 }

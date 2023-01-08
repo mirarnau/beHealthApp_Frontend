@@ -5,6 +5,8 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
+import 'package:medical_devices/data/Models/Observation.dart';
+import 'package:medical_devices/data/Services/userService.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -14,6 +16,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  List<AnomalyReport> listAnomalyReports = [];
+  bool checkDone = false;
+  List<Widget> listWidgetsCarroussel = [];
+
+  UserService userService = UserService();
   void initState() {
     super.initState();
   }
@@ -24,6 +31,9 @@ class _ProfilePageState extends State<ProfilePage> {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is AuthorizedState) {
+          if (!checkDone) {
+            getAnomalies(state.user.apiId);
+          }
           return Scaffold(
             body: SingleChildScrollView(
               child: Center(
@@ -172,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   SizedBox(height: 8.0),
                                   Text(
-                                    '2',
+                                    listAnomalyReports.length.toString(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22.0,
@@ -218,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   SizedBox(height: 8.0),
                                   Text(
-                                    '1523',
+                                    state.user.todayFootsteps.toString(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22.0,
@@ -342,4 +352,59 @@ class _ProfilePageState extends State<ProfilePage> {
       },
     );
   }
+
+  void getAnomalies(String id) async {
+    var response = await userService.getAnomaliesPatient(id);
+    if (response != null) {
+      setState(() {
+        checkDone = true;
+        listAnomalyReports = response;
+      });
+    }
+  }
 }
+
+/*
+Container(
+                              height: 140,
+                              width: 180.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    offset: Offset(0, 2),
+                                    blurRadius: 6.0,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 20.0),
+                                  Icon(
+                                    Icons.heart_broken,
+                                    color: Color.fromARGB(255, 30, 61, 72),
+                                    size: 40.0,
+                                  ),
+                                  SizedBox(height: 8.0),
+                                  Text(
+                                    listAnomalyReports.length.toString(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22.0,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4.0),
+                                  Text(
+                                    'Potential anomalies',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14.0,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            */

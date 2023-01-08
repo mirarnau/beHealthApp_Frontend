@@ -113,6 +113,20 @@ class UserService {
     }
     return null;
   }
+
+  Future<List<AnomalyReport>?> getAnomaliesPatient(String patientId) async {
+    var res = await http.get(Uri.parse('$baseUrlApi/anomalies/$patientId'), headers: {'authorization': LocalStorage('key').getItem('token')});
+
+    if (res.statusCode == 200) {
+      var data = jsonDecode(res.body);
+      List<AnomalyReport> listAnomalies = [];
+      for (int i = 0; i < data.length; i++) {
+        listAnomalies.add(AnomalyReport(codingDisplay: data[i]['codingDisplay'], value: data[i]['value'], result: data[i]['result']));
+      }
+      return listAnomalies;
+    }
+    return null;
+  }
 }
 
 class JWTtoken {

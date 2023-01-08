@@ -322,3 +322,14 @@ class HighOrLow {
     return highOrLow;
   }
 }
+
+class AnomalyReport {
+  late final String codingDisplay;
+  late final num value;
+  late final int result;
+  AnomalyReport({required this.codingDisplay, required this.value, required this.result});
+  factory AnomalyReport.fromJSON(dynamic json) {
+    AnomalyReport anomalyReport = AnomalyReport(codingDisplay: json['codingDisplay'], value: json['value'], result: json['result']);
+    return anomalyReport;
+  }
+}

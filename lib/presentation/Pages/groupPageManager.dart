@@ -10,6 +10,7 @@ import 'package:medical_devices/data/Models/User.dart';
 import 'package:medical_devices/data/Services/userService.dart';
 import 'package:medical_devices/presentation/Pages/chatPage.dart';
 import 'package:medical_devices/presentation/Pages/infoPatientGroup.dart';
+import 'package:medical_devices/presentation/Pages/infoStepsManager.dart';
 
 class GroupPageManager extends StatefulWidget {
   final Group group;
@@ -33,6 +34,7 @@ class _GroupPageManagerState extends State<GroupPageManager> {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<ConversationBloc>(context).add(ConversationToIdleConversationEvent());
+    BlocProvider.of<RequestsBloc>(context).add(LoadRequestsGroupEvent(widget.group.id));
     UserService userService = UserService();
     return Scaffold(
       appBar: AppBar(
@@ -74,7 +76,7 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: 700,
+                  height: MediaQuery.of(context).size.height - 151,
                   child: TabBarView(
                     children: <Widget>[
                       ListView.builder(
@@ -87,15 +89,17 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                               onTap: () {},
                               child: GestureDetector(
                                 onTap: () async {
-                                  User? userFhir = await userService.getPatientFromFhir(widget.group.patients[index].apiId);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => InfoPatientPage(
-                                                user: widget.group.patients[index],
-                                                userFhir: userFhir!,
-                                                group: widget.group,
-                                              )));
+                                  if (!idPatientsRequests.contains(widget.group.patients[index].apiId)) {
+                                    User? userFhir = await userService.getPatientFromFhir(widget.group.patients[index].apiId);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => InfoPatientPage(
+                                                  user: widget.group.patients[index],
+                                                  userFhir: userFhir!,
+                                                  group: widget.group,
+                                                )));
+                                  }
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -140,20 +144,22 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                                                 for (int i = 0; i < state.jsonRequests.length; i++) {
                                                   idPatientsRequests.add(state.jsonRequests[i]['patient']['_id']);
                                                 }
-                                              }
-                                              return Visibility(
-                                                visible: idPatientsRequests.contains(widget.group.patients[index].apiId),
-                                                child: Container(
-                                                  color: Color.fromARGB(255, 255, 200, 0),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(4.0),
-                                                    child: Text(
-                                                      'PENDING',
-                                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                                return Visibility(
+                                                  visible: idPatientsRequests.contains(widget.group.patients[index].apiId),
+                                                  child: Container(
+                                                    color: Color.fromARGB(255, 255, 200, 0),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(4.0),
+                                                      child: Text(
+                                                        'PENDING',
+                                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              );
+                                                );
+                                              } else {
+                                                return SizedBox();
+                                              }
                                             },
                                           )
                                         ],
@@ -166,7 +172,7 @@ class _GroupPageManagerState extends State<GroupPageManager> {
                           );
                         }),
                       ),
-                      Column(),
+                      InfoStepsManagerPage(group: widget.group),
                       BlocBuilder<ConversationBloc, ConversationState>(
                         builder: (context, state) {
                           print(state);
