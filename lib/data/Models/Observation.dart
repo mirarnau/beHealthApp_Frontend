@@ -327,9 +327,10 @@ class AnomalyReport {
   late final String codingDisplay;
   late final num value;
   late final int result;
-  AnomalyReport({required this.codingDisplay, required this.value, required this.result});
+  late final String date;
+  AnomalyReport({required this.codingDisplay, required this.value, required this.result, required this.date});
   factory AnomalyReport.fromJSON(dynamic json) {
-    AnomalyReport anomalyReport = AnomalyReport(codingDisplay: json['codingDisplay'], value: json['value'], result: json['result']);
+    AnomalyReport anomalyReport = AnomalyReport(codingDisplay: json['codingDisplay'], value: json['value'], result: json['result'], date: json['date']);
     return anomalyReport;
   }
 }

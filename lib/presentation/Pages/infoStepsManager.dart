@@ -5,6 +5,7 @@ import 'package:medical_devices/business_logic/bloc/authorization/authorization_
 import 'package:medical_devices/data/Models/Group.dart';
 import 'package:medical_devices/data/Models/User.dart';
 import 'package:medical_devices/data/Services/groupService.dart';
+import 'package:medical_devices/data/Services/userService.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class InfoStepsManagerPage extends StatefulWidget {
@@ -17,6 +18,8 @@ class InfoStepsManagerPage extends StatefulWidget {
 
 class _InfoStepsManagerPageState extends State<InfoStepsManagerPage> {
   GroupService groupService = GroupService();
+  UserService userService = UserService();
+  num userStepsAverage = 0;
   num lastDayAverage = 0;
   num historicalAverage = 0;
   num percentageVariation = 0;
@@ -71,7 +74,7 @@ class _InfoStepsManagerPageState extends State<InfoStepsManagerPage> {
                 ),
                 series: <ChartSeries>[
                   LineSeries<DailyStepsAverage, String>(
-                    name: 'Steps',
+                    name: 'Group steps',
                     color: Theme.of(context).primaryColor,
                     width: 1.0,
                     dataSource: widget.group.dailyStepsAverages,
@@ -86,6 +89,27 @@ class _InfoStepsManagerPageState extends State<InfoStepsManagerPage> {
                       isVisible: true,
                       color: Theme.of(context).primaryColor,
                       borderColor: Theme.of(context).primaryColor,
+                      height: 10.0,
+                      width: 10.0,
+                      shape: DataMarkerType.circle,
+                    ),
+                  ),
+                  LineSeries<FootstepsData, String>(
+                    name: 'Your steps',
+                    color: Colors.orange,
+                    width: 1.0,
+                    dataSource: myUser.footsteps,
+                    xValueMapper: (FootstepsData stepsAverage, _) => '${stepsAverage.dateTime.day}/${stepsAverage.dateTime.month}',
+                    yValueMapper: (FootstepsData stepsAverage, _) => stepsAverage.value,
+                    dataLabelSettings: DataLabelSettings(
+                      isVisible: true,
+                      textStyle: TextStyle(color: Color.fromARGB(255, 85, 85, 85), fontWeight: FontWeight.bold),
+                    ),
+                    enableTooltip: true,
+                    markerSettings: MarkerSettings(
+                      isVisible: true,
+                      color: Colors.orange,
+                      borderColor: Colors.orange,
                       height: 10.0,
                       width: 10.0,
                       shape: DataMarkerType.circle,
@@ -401,6 +425,9 @@ class _InfoStepsManagerPageState extends State<InfoStepsManagerPage> {
     percentageVariation = averages['percentageDeviation'];
     lowRangeValue = historicalAverage - averages['standardDeviation'];
     highRangeValue = historicalAverage + averages['standardDeviation'];
+    var averageUser = await userService.getAverageStepsUser(myUser.apiId);
+    userStepsAverage = averageUser['averageStepsUser'];
+
     setState(() {});
   }
 
@@ -461,7 +488,7 @@ class _InfoStepsManagerPageState extends State<InfoStepsManagerPage> {
   }
 
   Widget getMarkRange() {
-    if (myUser.todayFootsteps > highRangeValue) {
+    if (userStepsAverage > highRangeValue) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -481,7 +508,7 @@ class _InfoStepsManagerPageState extends State<InfoStepsManagerPage> {
         ],
       );
     }
-    if (myUser.todayFootsteps < highRangeValue) {
+    if (userStepsAverage < lowRangeValue) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

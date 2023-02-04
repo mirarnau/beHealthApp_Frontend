@@ -197,12 +197,12 @@ class Coding {
 
 class FootstepsData {
   late final DateTime dateTime;
-  late final num numSteps;
+  late final num value;
   FootstepsData();
   factory FootstepsData.fromJSON(dynamic json) {
     FootstepsData footstepsData = FootstepsData();
-    footstepsData.dateTime = json['date'];
-    footstepsData.numSteps = json['num_steps'];
+    footstepsData.dateTime = DateTime.parse(json['date']);
+    footstepsData.value = json['value'];
     return footstepsData;
   }
 }

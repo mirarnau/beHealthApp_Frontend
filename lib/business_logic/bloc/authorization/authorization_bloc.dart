@@ -29,5 +29,8 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
         emit(UnauthorizedState());
       }
     });
+    on<LogoutEvent>((event, emit) async {
+      emit(UnauthorizedState());
+    });
   }
 }

@@ -111,14 +111,20 @@ class _MeasurementPageState extends State<MeasurementPage> {
                           visible: state is DeviceMeasureDoneState || state is DeviceSelectedState,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 30.0),
-                            child: TextButton(
-                              style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor, fixedSize: Size(200.0, 40.0)),
-                              onPressed: () {
-                                BlocProvider.of<DeviceBloc>(context).add(DeviceDoMeasureEvent(idPatient, value, value2, nameDevice, observationType));
-                              },
-                              child: Text(
-                                translate('pages.measurements_page.measure'),
-                                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: FittedBox(
+                                child: FloatingActionButton(
+                                  backgroundColor: Theme.of(context).primaryColor,
+                                  onPressed: () {
+                                    BlocProvider.of<DeviceBloc>(context).add(DeviceDoMeasureEvent(idPatient, value, value2, nameDevice, observationType));
+                                  },
+                                  child: Text(
+                                    translate('pages.measurements_page.measure'),
+                                    style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -214,10 +220,10 @@ class _MeasurementPageState extends State<MeasurementPage> {
       }
       if (nameDevice == "Tensiometer") {
         Random random = Random();
-        int minSys = 60;
-        int maxSys = 70;
-        int minDiast = 83;
-        int maxDiast = 90;
+        int minSys = 90;
+        int maxSys = 120;
+        int minDiast = 60;
+        int maxDiast = 80;
         value = minSys + random.nextInt(maxSys - minSys);
         value2 = minDiast + random.nextInt(maxDiast - minDiast);
         observationType = "Pressure";
@@ -230,8 +236,8 @@ class _MeasurementPageState extends State<MeasurementPage> {
       }
       if (nameDevice == "Thermometer") {
         Random random = Random();
-        int min = 34;
-        int max = 39;
+        int min = 39;
+        int max = 40;
         value = min + random.nextInt(max - min);
         value2 = 0;
         observationType = "Temperature";
@@ -245,8 +251,8 @@ class _MeasurementPageState extends State<MeasurementPage> {
       }
       if (nameDevice == "Temperature bracelet") {
         Random random = Random();
-        int min = 34;
-        int max = 39;
+        int min = 39;
+        int max = 40;
         value = min + random.nextInt(max - min);
         value2 = 0;
         observationType = "Temperature";

@@ -168,7 +168,6 @@ class _LoginPageState extends State<LoginPage> {
               elevation: 5.0,
               onPressed: () {
                 if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-                  BlocProvider.of<PatientBloc>(context).add(PatientLoadRequest('52'));
                   BlocProvider.of<AuthorizationBloc>(context).add(LoginEvent(emailController.text, passwordController.text));
                 }
               },

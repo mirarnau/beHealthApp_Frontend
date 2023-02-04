@@ -121,9 +121,18 @@ class UserService {
       var data = jsonDecode(res.body);
       List<AnomalyReport> listAnomalies = [];
       for (int i = 0; i < data.length; i++) {
-        listAnomalies.add(AnomalyReport(codingDisplay: data[i]['codingDisplay'], value: data[i]['value'], result: data[i]['result']));
+        listAnomalies.add(AnomalyReport(codingDisplay: data[i]['codingDisplay'], value: data[i]['value'], result: data[i]['result'], date: data[i]['date']));
       }
       return listAnomalies;
+    }
+    return null;
+  }
+
+  Future<dynamic> getAverageStepsUser(String idUser) async {
+    var res = await http.get(Uri.parse('http://localhost:3000/api/groups/average/patient/$idUser'), headers: {'accept': 'application/json'});
+    if (res.statusCode == 200) {
+      var decoded = jsonDecode(res.body);
+      return decoded;
     }
     return null;
   }

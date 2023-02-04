@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
-import 'dart:ffi';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
@@ -172,32 +171,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ],
                               ),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 20.0),
-                                  Icon(
-                                    Icons.heart_broken,
-                                    color: Color.fromARGB(255, 30, 61, 72),
-                                    size: 40.0,
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  Text(
-                                    listAnomalyReports.length.toString(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 22.0,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4.0),
-                                  Text(
-                                    'Potential anomalies',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14.0,
-                                    ),
-                                  )
-                                ],
-                              ),
+                              child: CarouselSlider(
+                                  items: getWidgetsAnomalies(),
+                                  options: CarouselOptions(
+                                    enlargeCenterPage: false,
+                                    autoPlay: false,
+                                    autoPlayCurve: Curves.fastOutSlowIn,
+                                    scrollDirection: Axis.horizontal,
+                                    enableInfiniteScroll: false,
+                                    autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                    viewportFraction: 1,
+                                  )),
                             ),
                           ),
                           Spacer(),
@@ -228,7 +212,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   SizedBox(height: 8.0),
                                   Text(
-                                    state.user.todayFootsteps.toString(),
+                                    (state.user.todayFootsteps + 793).toString(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22.0,
@@ -362,49 +346,94 @@ class _ProfilePageState extends State<ProfilePage> {
       });
     }
   }
-}
 
-/*
-Container(
-                              height: 140,
-                              width: 180.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    offset: Offset(0, 2),
-                                    blurRadius: 6.0,
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 20.0),
-                                  Icon(
-                                    Icons.heart_broken,
-                                    color: Color.fromARGB(255, 30, 61, 72),
-                                    size: 40.0,
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  Text(
-                                    listAnomalyReports.length.toString(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 22.0,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4.0),
-                                  Text(
-                                    'Potential anomalies',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14.0,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            */
+  List<Widget> getWidgetsAnomalies() {
+    List<Widget> listWidgets = [];
+    listWidgets.add(
+      Column(
+        children: [
+          SizedBox(height: 14.0),
+          Icon(
+            Icons.heart_broken,
+            color: Color.fromARGB(255, 30, 61, 72),
+            size: 40.0,
+          ),
+          SizedBox(height: 2.0),
+          Text(
+            listAnomalyReports.length.toString(),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22.0,
+            ),
+          ),
+          SizedBox(height: 2.0),
+          Text(
+            'Potential anomalies',
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 14.0,
+            ),
+          ),
+          SizedBox(height: 4.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('SWIPE'),
+              Icon(
+                Icons.swipe_left,
+              )
+            ],
+          )
+        ],
+      ),
+    );
+    for (int i = 0; i < listAnomalyReports.length; i++) {
+      listWidgets.add(
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    listAnomalyReports[i].result == 1 ? Icons.arrow_downward : Icons.arrow_upward,
+                    color: listAnomalyReports[i].result == 1 ? Colors.blue : Colors.red,
+                    size: 30.0,
+                  ),
+                  Text(
+                    listAnomalyReports[i].value.toString(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 34.0,
+                      color: listAnomalyReports[i].result == 1 ? Colors.blue : Colors.red,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 6.0),
+            Text(
+              listAnomalyReports[i].codingDisplay,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: listAnomalyReports[i].result == 1 ? Colors.blue : Colors.red,
+                fontSize: 13.0,
+              ),
+            ),
+            SizedBox(height: 4.0),
+            Text(
+              listAnomalyReports[i].date,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 13.0,
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    return listWidgets;
+  }
+}

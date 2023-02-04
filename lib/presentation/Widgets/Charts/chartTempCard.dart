@@ -29,6 +29,8 @@ class ChartTempCard extends StatelessWidget {
             borderWidth: 0.0,
           ),
           primaryYAxis: NumericAxis(
+            minimum: 30.0,
+            maximum: 45.0,
             plotBands: [
               PlotBand(
                 start: listObservations[0].referenceRange[0].high.value,
