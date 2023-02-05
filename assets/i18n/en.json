@@ -150,6 +150,16 @@
             "country": "Country:  ",
             "phone_number": "Phone number:  ",
             "user_devices": "Here you can see the devices that the user has linked and access to their corresponding measurements record:"
+        },
+        "config_page":
+        {
+            "common": "Common",
+            "profile": "Profile",
+            "security": "Security",
+            "language": "Language",
+            "phone_number": "Phone Number",
+            "addresses": "Addresses",
+            "roles_permissions": "Roles & Permissions"
         }
     }
 }

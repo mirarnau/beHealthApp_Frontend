@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medical_devices/business_logic/bloc/authorization/authorization_bloc.dart';
 import 'package:medical_devices/data/Models/Observation.dart';
 import 'package:medical_devices/data/Services/userService.dart';
+import 'package:medical_devices/presentation/Pages/configPage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -239,46 +240,51 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 20.0),
-                            child: Container(
-                              height: 140,
-                              width: 180.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    offset: Offset(0, 2),
-                                    blurRadius: 6.0,
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 20.0),
-                                  Icon(
-                                    Icons.settings,
-                                    color: Color.fromARGB(255, 30, 61, 72),
-                                    size: 40.0,
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  Text(
-                                    'Settings',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 22.0,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ConfigPage()));
+                              },
+                              child: Container(
+                                height: 140,
+                                width: 180.0,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0, 2),
+                                      blurRadius: 6.0,
                                     ),
-                                  ),
-                                  SizedBox(height: 4.0),
-                                  Text(
-                                    'Update personal data',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14.0,
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 20.0),
+                                    Icon(
+                                      Icons.settings,
+                                      color: Color.fromARGB(255, 30, 61, 72),
+                                      size: 40.0,
                                     ),
-                                  )
-                                ],
+                                    SizedBox(height: 8.0),
+                                    Text(
+                                      'Settings',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22.0,
+                                      ),
+                                    ),
+                                    SizedBox(height: 4.0),
+                                    Text(
+                                      'Update personal data',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14.0,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),

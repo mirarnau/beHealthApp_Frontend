@@ -25,6 +25,7 @@ dependencies:
   localstorage: ^4.0.0+1
   material_floating_search_bar: ^0.3.7
   intl: ^0.17.0
+  settings_ui: ^2.0.2
 
 dev_dependencies:
   flutter_test:

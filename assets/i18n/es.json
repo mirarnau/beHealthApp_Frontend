@@ -150,7 +150,16 @@
             "country": "País:  ",
             "phone_number": "Número de teléfono:  ",
             "user_devices": "Aquí puedes ver los dispositivos vinculados del usuario y acceder a su correspondiente histórico de medidas:"
+        },
+        "config_page":
+        {
+            "common": "Común",
+            "profile": "Perfil",
+            "Security": "Seguridad",
+            "language": "Idioma",
+            "phone_number": "Número de teléfono",
+            "addresses": "Direcciones",
+            "roles_permissions": "Roles y Permisos"
         }
-        
     }
 }
