@@ -19,6 +19,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
       }
     });
     on<LoginEvent>((event, emit) async {
+      emit(AuthorizingState());
       final userApi = await _patientService.login(event.email, event.password);
       if (userApi != null) {
         emit(AuthorizedState(userApi));

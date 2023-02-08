@@ -20,7 +20,10 @@ class UserService {
   }
 
   Future<User?> getPatientFromFhir(String idApi) async {
-    var res = await http.get(Uri.parse('$baseUrlApi/fhir/$idApi'), headers: {'accept': 'application/fhir+json'});
+    var res = await http.get(Uri.parse('$baseUrlApi/fhir/$idApi'), headers: {
+      'accept': 'application/fhir+json',
+      'authorization': LocalStorage('key').getItem('token'),
+    });
     if (res.statusCode == 200) {
       User patient = User.fromJSON(jsonDecode(res.body));
       return patient;
@@ -115,7 +118,9 @@ class UserService {
   }
 
   Future<List<AnomalyReport>?> getAnomaliesPatient(String patientId) async {
-    var res = await http.get(Uri.parse('$baseUrlApi/anomalies/$patientId'), headers: {'authorization': LocalStorage('key').getItem('token')});
+    var res = await http.get(Uri.parse('$baseUrlApi/anomalies/$patientId'), headers: {
+      'authorization': LocalStorage('key').getItem('token'),
+    });
 
     if (res.statusCode == 200) {
       var data = jsonDecode(res.body);

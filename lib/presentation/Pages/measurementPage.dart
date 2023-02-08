@@ -300,7 +300,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
         ),
       ));
     } else {
-      return Text('C');
+      return Text('Imposible state ');
     }
   }
 }
